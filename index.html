@@ -3,37 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Home Network Management Dashboard</title>
+    <title>Network Security Simulation Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="dashboard">
-        <h1>Smart Home Network Management Dashboard</h1>
-        <div class="device-grid">
-            <div class="device" id="light">
-                <img src="images/light.png" alt="Light">
-                <h2>Light</h2>
-                <p class="status">Status: <span id="light-status">Off</span></p>
-                <button onclick="toggleDevice('light')">Toggle</button>
-            </div>
-            <div class="device" id="thermostat">
-                <img src="images/thermostat.png" alt="Thermostat">
-                <h2>Thermostat</h2>
-                <p class="status">Temperature: <span id="thermostat-temp">22°C</span></p>
-                <button onclick="adjustTemperature('thermostat')">Adjust</button>
-            </div>
-            <div class="device" id="camera">
-                <img src="images/camera.png" alt="Camera">
-                <h2>Camera</h2>
-                <p class="status">Status: <span id="camera-status">Offline</span></p>
-                <button onclick="toggleDevice('camera')">Toggle</button>
-            </div>
+        <h1>Network Security Simulation Dashboard</h1>
+        <div class="controls">
+            <button onclick="simulateAttack()">Simulate Attack</button>
+            <button onclick="deploySecurityMeasure()">Deploy Security Measure</button>
         </div>
-        <div class="charts">
-            <canvas id="bandwidthChart"></canvas>
+        <div id="network-visualization"></div>
+        <div class="logs">
+            <h2>Logs</h2>
+            <ul id="log-list"></ul>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
