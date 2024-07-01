@@ -19,29 +19,10 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.device-grid {
+.controls {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
-}
-
-.device {
-    text-align: center;
-}
-
-.device img {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-.device h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
-
-.status {
-    margin: 10px 0;
 }
 
 button {
@@ -58,8 +39,26 @@ button:hover {
     background: #0056b3;
 }
 
-.charts {
+#network-visualization {
     width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.logs {
     max-width: 600px;
     margin: 0 auto;
+}
+
+.logs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.logs li {
+    background: #eee;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
