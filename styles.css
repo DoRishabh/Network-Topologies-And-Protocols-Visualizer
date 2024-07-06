@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,7 +7,11 @@ body {
     padding: 0;
     height: 100vh;
     overflow: hidden;
-    background-color: #f0f0f0;
+    background-image: url('https://www.guideoftheworld.net/map/india/indore/map_of_Indore.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f0f0f0; /* Fallback color */
 }
 
 #sidebar {
