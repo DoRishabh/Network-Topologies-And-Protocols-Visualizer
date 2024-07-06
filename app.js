@@ -2,11 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const cy = cytoscape({
     container: document.getElementById('cy'), // container to render in
-    elements: [
-      { data: { id: 'a' } },
-      { data: { id: 'b' } },
-      { data: { id: 'ab', source: 'a', target: 'b' } }
-    ],
+    elements: [],
     style: [
       {
         selector: 'node',
@@ -31,5 +27,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Add more functionality here as needed
+  let selectedNode = null;
+
+  // Add node functionality
+  document.getElementById('add-node').addEventListener('click', () => {
+    const id = `node${cy.nodes().length + 1}`;
+    cy.add({
+      group: 'nodes',
+      data: { id: id },
+      position: {
+        x: Math.random() * cy.width(),
+        y: Math.random() * cy.height()
+      }
+    });
+  });
+
+  // Add edge functionality
+  document.getElementById('add-edge').addEventListener('click', () => {
+    if (selectedNode) {
+      const id = `edge${cy.edges().length + 1}`;
+      cy.add({
+        group: 'edges',
+        data: { id: id, source: selectedNode.id(), target: cy.nodes().last().id() }
+      });
+      selectedNode = null;
+    } else {
+      alert('Select a node first by clicking on it.');
+    }
+  });
+
+  // Select node functionality
+  cy.on('tap', 'node', function (event) {
+    const node = event.target;
+    if (selectedNode) {
+      selectedNode.unselect();
+    }
+    selectedNode = node;
+    node.select();
+  });
 });
