@@ -47,14 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
         pushToUndoStack('add', node.json());
     }
 
-    document.querySelectorAll('.load-topology').forEach(button => {
+    document.querySelectorAll('.add-node').forEach(button => {
         button.addEventListener('click', () => {
-            const topology = button.getAttribute('data-topology');
-            fetchTopology(topology);
+            addNode(button.getAttribute('data-label'));
         });
     });
-
-    document.getElementById('create-new').addEventListener('click', createNewTopology);
 
     cy.on('tap', 'node', function (event) {
         const node = event.target;
@@ -176,43 +173,42 @@ document.addEventListener('DOMContentLoaded', function () {
         pushToUndoStack('remove', event.target.json());
     });
 
-    function fetchTopology(topology) {
-        // Implement logic to fetch and load the specified topology
-        // Example logic:
-        // Clear existing elements and load predefined topology
-        cy.elements().remove();
-        if (topology === 'Topology1') {
-            loadTopology1();
-        } else if (topology === 'Topology2') {
-            loadTopology2();
+    // Load preset topologies from sidebar
+    document.querySelectorAll('.load-topology').forEach(button => {
+        button.addEventListener('click', function () {
+            const topologyName = button.getAttribute('data-topology');
+            loadTopology(topologyName);
+        });
+    });
+
+    function loadTopology(topologyName) {
+        // Implement logic to load specific topologies
+        switch (topologyName) {
+            case 'Topology 1':
+                // Example: Add nodes and edges for Topology 1
+                addNode('AG3');
+                addNode('AG2');
+                addNode('OLT');
+                // Connect nodes with edges
+                const nodes = cy.nodes();
+                if (nodes.length >= 2) {
+                    cy.add({ group: 'edges', data: { source: nodes[0].id(), target: nodes[1].id() } });
+                }
+                break;
+            case 'Topology 2':
+                // Example: Add nodes and edges for Topology 2
+                addNode('Splitter 1');
+                addNode('Splitter 2');
+                addNode('ONT');
+                // Connect nodes with edges
+                const nodes2 = cy.nodes();
+                if (nodes2.length >= 2) {
+                    cy.add({ group: 'edges', data: { source: nodes2[0].id(), target: nodes2[1].id() } });
+                }
+                break;
+            default:
+                console.log(`Unknown topology: ${topologyName}`);
         }
     }
 
-    function loadTopology1() {
-        // Implement logic to load Topology 1
-        // Example:
-        addNode('AG3');
-        addNode('AG2');
-        addNode('OLT');
-        addNode('Splitter 1');
-        addNode('Splitter 2');
-    }
-
-    function loadTopology2() {
-        // Implement logic to load Topology 2
-        // Example:
-        addNode('AG3');
-        addNode('AG2');
-        addNode('OLT');
-        addNode('Splitter 1');
-        addNode('Splitter 2');
-        addNode('ONT');
-        addNode('Home');
-        addNode('Residential');
-    }
-
-    function createNewTopology() {
-        // Implement logic to clear current graph and start a new topology
-        cy.elements().remove();
-    }
 });
