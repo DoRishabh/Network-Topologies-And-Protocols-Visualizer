@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    overflow: hidden;
 }
 
 #sidePanel {
@@ -15,7 +16,8 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 #sidePanel a {
@@ -25,6 +27,7 @@ body {
     margin-bottom: 5px;
     background-color: #444;
     text-align: center;
+    border-radius: 5px;
 }
 
 #sidePanel a:hover {
@@ -35,11 +38,17 @@ body {
     flex-grow: 1;
     padding: 20px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    position: relative;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.network {
+    display: flex;
+    gap: 10px;
 }
 
 .component {
@@ -51,12 +60,16 @@ body {
     align-items: center;
     cursor: pointer;
     border: 2px solid #888;
+    border-radius: 5px;
 }
 
 #status {
     width: 100%;
     text-align: center;
     margin-top: 20px;
-    position: absolute;
+    position: sticky;
     bottom: 10px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
 }
