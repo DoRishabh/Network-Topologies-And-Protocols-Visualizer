@@ -18,3 +18,35 @@ body {
     height: 80%;
     border: 1px solid #ccc;
 }
+
+/* Styles for the context menu */
+.cytoscape-context-menus-cxt-menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.cytoscape-context-menus-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.cytoscape-context-menus-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Styles for the element image popup */
+#element-image {
+    position: absolute;
+    border: 1px solid #ccc;
+    background: white;
+    display: none;
+    padding: 5px;
+    z-index: 1001;
+}
+
+#element-image img {
+    width: 100px;
+    height: 100px;
+}
