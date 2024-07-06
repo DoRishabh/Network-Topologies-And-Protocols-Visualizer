@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Network Builder</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cytoscape-context-menus/cytoscape-context-menus.css">
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-context-menus/cytoscape-context-menus.js"></script>
 </head>
 <body>
     <div id="controls">
@@ -20,6 +22,9 @@
         <button id="redo">Redo</button>
     </div>
     <div id="cy"></div>
+    <div id="element-image" style="display:none; position:absolute; border:1px solid #ccc; background:white;">
+        <img id="element-image-src" src="" alt="Element Image" style="width:100px; height:100px;">
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
