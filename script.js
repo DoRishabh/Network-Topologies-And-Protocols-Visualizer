@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selector: 'node',
         style: {
           'background-color': '#666',
-          'label': 'data(label)' // Change 'id' to 'label'
+          'label': 'data(label)' // Use 'label' instead of 'id'
         }
       },
       {
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let addingEdge = false;
   let sourceNode = null;
 
-  // Function to add node with a specific label
   function addNode(label) {
     const id = `node${cy.nodes().length + 1}`;
     console.log(`Adding node with id: ${id} and label: ${label}`);
@@ -47,24 +46,18 @@ document.addEventListener('DOMContentLoaded', function () {
     pushToUndoStack('add', node.json());
   }
 
-  // Add node event listeners
-  document.getElementById('add-ag3').addEventListener('click', () => addNode('AG3'));
-  document.getElementById('add-ag2').addEventListener('click', () => addNode('AG2'));
-  document.getElementById('add-olt').addEventListener('click', () => addNode('OLT'));
-  document.getElementById('add-s1').addEventListener('click', () => addNode('Splitter 1'));
-  document.getElementById('add-s2').addEventListener('click', () => addNode('Splitter 2'));
-  document.getElementById('add-ont').addEventListener('click', () => addNode('ONT'));
-  document.getElementById('add-home').addEventListener('click', () => addNode('Home'));
-  document.getElementById('add-residential').addEventListener('click', () => addNode('Residential'));
+  document.querySelectorAll('.add-node').forEach(button => {
+    button.addEventListener('click', () => {
+      addNode(button.getAttribute('data-label'));
+    });
+  });
 
-  // Add edge functionality
   document.getElementById('add-edge').addEventListener('click', () => {
     addingEdge = true;
     sourceNode = null;
     console.log('Click on a node to start adding an edge.');
   });
 
-  // Select node functionality
   cy.on('tap', 'node', function (event) {
     const node = event.target;
     if (addingEdge) {
@@ -93,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Undo/Redo functionality
   const undoStack = [];
   const redoStack = [];
 
@@ -148,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
     pushToUndoStack('remove', event.target.json());
   });
 
-  // Context menu setup
   cy.contextMenus({
     menuItems: [
       {
@@ -181,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
     ]
   });
 
-  // Hide image popup on click outside
   document.addEventListener('click', function (event) {
     const elementImageDiv = document.getElementById('element-image');
     if (!elementImageDiv.contains(event.target)) {
