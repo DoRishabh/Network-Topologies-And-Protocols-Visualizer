@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   let selectedNode = null;
+  let addingEdge = false;
+  let sourceNode = null;
 
   // Add node functionality
   document.getElementById('add-node').addEventListener('click', () => {
@@ -46,28 +48,89 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Add edge functionality
   document.getElementById('add-edge').addEventListener('click', () => {
-    if (selectedNode) {
-      const id = `edge${cy.edges().length + 1}`;
-      const targetNode = cy.nodes().last();
-      console.log(`Adding edge with id: ${id}, source: ${selectedNode.id()}, target: ${targetNode.id()}`);
-      cy.add({
-        group: 'edges',
-        data: { id: id, source: selectedNode.id(), target: targetNode.id() }
-      });
-      selectedNode = null;
-    } else {
-      alert('Select a node first by clicking on it.');
-    }
+    addingEdge = true;
+    sourceNode = null;
+    console.log('Click on a node to start adding an edge.');
   });
 
   // Select node functionality
   cy.on('tap', 'node', function (event) {
     const node = event.target;
-    if (selectedNode) {
-      selectedNode.unselect();
+    if (addingEdge) {
+      if (!sourceNode) {
+        sourceNode = node;
+        console.log(`Source node selected: ${sourceNode.id()}. Now click on the target node.`);
+      } else {
+        const id = `edge${cy.edges().length + 1}`;
+        console.log(`Adding edge with id: ${id}, source: ${sourceNode.id()}, target: ${node.id()}`);
+        cy.add({
+          group: 'edges',
+          data: { id: id, source: sourceNode.id(), target: node.id() }
+        });
+        addingEdge = false;
+        sourceNode = null;
+      }
+    } else {
+      if (selectedNode) {
+        selectedNode.unselect();
+      }
+      selectedNode = node;
+      node.select();
+      console.log(`Node selected: ${node.id()}`);
     }
-    selectedNode = node;
-    node.select();
-    console.log(`Node selected: ${node.id()}`);
+  });
+
+  // Undo/Redo functionality
+  const undoStack = [];
+  const redoStack = [];
+
+  function pushToUndoStack(action, element) {
+    undoStack.push({ action, element });
+    console.log(`Action added to undo stack: ${action}`);
+  }
+
+  function undo() {
+    if (undoStack.length > 0) {
+      const { action, element } = undoStack.pop();
+      redoStack.push({ action, element });
+      if (action === 'add') {
+        cy.remove(element);
+      } else if (action === 'remove') {
+        cy.add(element);
+      }
+      console.log(`Undo action: ${action}`);
+    }
+  }
+
+  function redo() {
+    if (redoStack.length > 0) {
+      const { action, element } = redoStack.pop();
+      undoStack.push({ action, element });
+      if (action === 'add') {
+        cy.add(element);
+      } else if (action === 'remove') {
+        cy.remove(element);
+      }
+      console.log(`Redo action: ${action}`);
+    }
+  }
+
+  document.getElementById('undo').addEventListener('click', undo);
+  document.getElementById('redo').addEventListener('click', redo);
+
+  cy.on('add', 'node', function (event) {
+    pushToUndoStack('add', event.target.json());
+  });
+
+  cy.on('add', 'edge', function (event) {
+    pushToUndoStack('add', event.target.json());
+  });
+
+  cy.on('remove', 'node', function (event) {
+    pushToUndoStack('remove', event.target.json());
+  });
+
+  cy.on('remove', 'edge', function (event) {
+    pushToUndoStack('remove', event.target.json());
   });
 });
