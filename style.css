@@ -1,75 +1,42 @@
-/* styles.css */
-
 body {
     display: flex;
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
-#sidePanel {
+.sidebar {
     width: 200px;
-    background-color: #333;
-    color: white;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    height: 100vh;
-}
-
-#sidePanel a {
-    color: white;
-    text-decoration: none;
+    background-color: #f4f4f4;
     padding: 10px;
-    margin-bottom: 5px;
-    background-color: #444;
-    text-align: center;
-    border-radius: 5px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-#sidePanel a:hover {
-    background-color: #575757;
-}
-
-#mainContent {
+.canvas {
     flex-grow: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: flex-start;
-    align-items: center;
-    overflow-y: auto;
-    height: 100vh;
-}
-
-.network {
-    display: flex;
-    gap: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    margin: 10px;
+    overflow: auto;
+    position: relative;
 }
 
 .component {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border: 2px solid #888;
-    border-radius: 5px;
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: grab;
 }
 
-#status {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    position: sticky;
-    bottom: 10px;
-    background-color: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    margin: 10px 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
 }
