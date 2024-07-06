@@ -10,24 +10,10 @@
     <link rel="stylesheet" href="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.css">
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Topologies</h2>
-        <ul id="topology-list">
-            <li><button class="load-topology" data-topology="Topology 1">Topology 1</button></li>
-            <li><button class="load-topology" data-topology="Topology 2">Topology 2</button></li>
-            <!-- Add more topologies as needed -->
-        </ul>
-    </div>
-
     <div id="controls">
-        <button class="add-node" data-label="AG3">Add AG3</button>
-        <button class="add-node" data-label="AG2">Add AG2</button>
-        <button class="add-node" data-label="OLT">Add OLT</button>
-        <button class="add-node" data-label="Splitter 1">Add Splitter 1</button>
-        <button class="add-node" data-label="Splitter 2">Add Splitter 2</button>
-        <button class="add-node" data-label="ONT">Add ONT</button>
-        <button class="add-node" data-label="Home">Add Home</button>
-        <button class="add-node" data-label="Residential">Add Residential</button>
+        <button class="load-topology" data-topology="Topology1">Load Topology 1</button>
+        <button class="load-topology" data-topology="Topology2">Load Topology 2</button>
+        <button id="create-new">Create New</button>
         <button id="add-edge">Add EDGE</button>
         <button id="undo">Undo</button>
         <button id="redo">Redo</button>
