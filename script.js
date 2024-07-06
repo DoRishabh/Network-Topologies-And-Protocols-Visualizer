@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 selector: 'node',
                 style: {
                     'background-color': '#666',
-                    'label': 'data(label)' // Use 'label' instead of 'id'
+                    'label': 'data(label)'
                 }
             },
             {
@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedNode = null;
     let sourceNode = null;
     let touchStartTime = 0;
+    let clickCount = 0;
     const LONG_PRESS_DURATION = 5000; // 5000 milliseconds (5 seconds)
+    const TRIPLE_CLICK_INTERVAL = 600; // 600 milliseconds for triple-click
 
     function addNode(label) {
         const id = `node${cy.nodes().length + 1}`;
@@ -93,6 +95,19 @@ document.addEventListener('DOMContentLoaded', function () {
         touchStartTime = 0;
     });
 
+    // Handle triple-click for mobile interface
+    cy.on('click', 'node', function () {
+        clickCount++;
+        setTimeout(() => {
+            if (clickCount === 3) {
+                const label = selectedNode.data('label').toLowerCase().replace(' ', '-');
+                const imageUrl = `images/${label}.jpg`;
+                showImage(imageUrl);
+            }
+            clickCount = 0;
+        }, TRIPLE_CLICK_INTERVAL);
+    });
+
     function showImage(imageUrl) {
         const elementImageDiv = document.getElementById('element-image');
         const elementImageSrc = document.getElementById('element-image-src');
@@ -108,12 +123,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Delete node or edge
+    // Add a context menu for right-click actions
     cy.on('cxttap', 'node, edge', function (event) {
         const target = event.target;
-        console.log(`Deleting ${target.isNode() ? 'node' : 'edge'} with id: ${target.id()}`);
-        pushToUndoStack('remove', target.json());
-        target.remove();
+        const contextMenu = document.getElementById('context-menu');
+        contextMenu.style.top = `${event.originalEvent.clientY}px`;
+        contextMenu.style.left = `${event.originalEvent.clientX}px`;
+        contextMenu.style.display = 'block';
+
+        const deleteBtn = document.getElementById('delete-btn');
+        const showImgBtn = document.getElementById('show-img-btn');
+
+        deleteBtn.onclick = function () {
+            console.log(`Deleting ${target.isNode() ? 'node' : 'edge'} with id: ${target.id()}`);
+            pushToUndoStack('remove', target.json());
+            target.remove();
+            contextMenu.style.display = 'none';
+        };
+
+        showImgBtn.onclick = function () {
+            const label = target.data('label').toLowerCase().replace(' ', '-');
+            const imageUrl = `images/${label}.jpg`;
+            showImage(imageUrl);
+            contextMenu.style.display = 'none';
+        };
+    });
+
+    document.addEventListener('click', function (event) {
+        const contextMenu = document.getElementById('context-menu');
+        if (!contextMenu.contains(event.target)) {
+            contextMenu.style.display = 'none';
+        }
     });
 
     // Undo/Redo functionality with multiple steps
@@ -123,8 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function pushToUndoStack(action, element) {
         undoStack.push({ action, element });
         console.log(`Action added to undo stack: ${action}`);
-        // Clear redo stack when a new action is pushed to undo stack
-        redoStack.length = 0;
+        redoStack.length = 0; // Clear redo stack when a new action is pushed to undo stack
     }
 
     function undo() {
@@ -156,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('undo').addEventListener('click', undo);
     document.getElementById('redo').addEventListener('click', redo);
 
-    // Event listeners for adding to undo stack
     cy.on('add', 'node', function (event) {
         pushToUndoStack('add', event.target.json());
     });
@@ -181,22 +219,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.getElementById('clear-topology').addEventListener('click', function () {
+        cy.elements().remove();
+        console.log('Topology cleared');
+    });
+
     function loadTopology(topologyName) {
         // Implement logic to load specific topologies
         switch (topologyName) {
             case 'Topology 1':
-                // Example: Add nodes and edges for Topology 1
                 addNode('AG3');
                 addNode('AG2');
                 addNode('OLT');
                 // Connect nodes with edges
-                const nodes = cy.nodes();
-                if (nodes.length >= 2) {
-                    cy.add({ group: 'edges', data: { source: nodes[0].id(), target: nodes[1].id() } });
+                const nodes1 = cy.nodes();
+                if (nodes1.length >= 2) {
+                    cy.add({ group: 'edges', data: { source: nodes1[0].id(), target: nodes1[1].id() } });
                 }
                 break;
             case 'Topology 2':
-                // Example: Add nodes and edges for Topology 2
                 addNode('Splitter 1');
                 addNode('Splitter 2');
                 addNode('ONT');
@@ -210,5 +251,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(`Unknown topology: ${topologyName}`);
         }
     }
-
 });
