@@ -75,6 +75,41 @@ document.addEventListener('DOMContentLoaded', function () {
           group: 'edges',
           data: { id: id, source: sourceNode.id(), target: node.id() }
         });
+
+        if (sourceNode.data('label') === 'Splitter 1') {
+          for (let i = 0; i < 8; i++) {
+            const s2Id = `nodeS2${cy.nodes().length + 1}`;
+            cy.add({
+              group: 'nodes',
+              data: { id: s2Id, label: 'S2 Output' },
+              position: {
+                x: sourceNode.position('x') + (i % 2) * 50,
+                y: sourceNode.position('y') + Math.floor(i / 2) * 50
+              }
+            });
+            cy.add({
+              group: 'edges',
+              data: { id: `edgeS2${cy.edges().length + 1}`, source: sourceNode.id(), target: s2Id }
+            });
+
+            for (let j = 0; j < 8; j++) {
+              const finalId = `nodeFinal${cy.nodes().length + 1}`;
+              cy.add({
+                group: 'nodes',
+                data: { id: finalId, label: 'Final Output' },
+                position: {
+                  x: s2Id.position('x') + (j % 2) * 25,
+                  y: s2Id.position('y') + Math.floor(j / 2) * 25
+                }
+              });
+              cy.add({
+                group: 'edges',
+                data: { id: `edgeFinal${cy.edges().length + 1}`, source: s2Id, target: finalId }
+              });
+            }
+          }
+        }
+
         addingEdge = false;
         sourceNode = null;
       }
@@ -94,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function pushToUndoStack(action, element) {
     undoStack.push({ action, element });
+    redoStack.length = 0; // Clear redo stack on new action
     console.log(`Action added to undo stack: ${action}`);
   }
 
