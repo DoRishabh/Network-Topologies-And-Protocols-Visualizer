@@ -183,4 +183,33 @@ document.addEventListener('DOMContentLoaded', function () {
   cy.on('remove', 'edge', function (event) {
     pushToUndoStack('remove', event.target.json());
   });
+
+  // Context menu setup
+  cy.contextMenus({
+    menuItems: [
+      {
+        id: 'show-image',
+        content: 'Show Image',
+        tooltipText: 'Show Image',
+        selector: 'node',
+        onClickFunction: function (event) {
+          const node = event.target || event.cyTarget;
+          const elementImageDiv = document.getElementById('element-image');
+          const elementImageSrc = document.getElementById('element-image-src');
+          const label = node.data('label').toLowerCase().replace(' ', '-');
+          elementImageSrc.src = `images/${label}.jpg`; // Update this to the actual image path
+          elementImageDiv.style.left = `${event.originalEvent.pageX}px`;
+          elementImageDiv.style.top = `${event.originalEvent.pageY}px`;
+          elementImageDiv.style.display = 'block';
+        }
+      }
+    ]
+  });
+
+  document.addEventListener('click', function (event) {
+    const elementImageDiv = document.getElementById('element-image');
+    if (!elementImageDiv.contains(event.target)) {
+      elementImageDiv.style.display = 'none';
+    }
+  });
 });
