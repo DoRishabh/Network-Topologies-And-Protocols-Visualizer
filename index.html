@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Network Builder</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cytoscape-context-menus/cytoscape-context-menus.css">
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape-context-menus/cytoscape-context-menus.js"></script>
+    <script src="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.css">
 </head>
 <body>
     <div id="controls">
@@ -15,15 +15,17 @@
         <button id="add-ag3">Add AG3</button>
         <button id="add-ag2">Add AG2</button>
         <button id="add-olt">Add OLT</button>
-        <button id="add-s1">Add S1</button>
-        <button id="add-s2">Add S2</button>
+        <button id="add-s1">Add Splitter 1</button>
+        <button id="add-s2">Add Splitter 2</button>
         <button id="add-ont">Add ONT</button>
+        <button id="add-home">Add Home</button>
+        <button id="add-residential">Add Residential</button>
         <button id="undo">Undo</button>
         <button id="redo">Redo</button>
     </div>
     <div id="cy"></div>
-    <div id="element-image" style="display:none; position:absolute; border:1px solid #ccc; background:white;">
-        <img id="element-image-src" src="" alt="Element Image" style="width:100px; height:100px;">
+    <div id="element-image">
+        <img id="element-image-src" src="" alt="Element Image">
     </div>
     <script src="script.js"></script>
 </body>
