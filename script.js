@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         y: Math.random() * cy.height()
       }
     });
-    pushToUndoStack('add', node);
+    pushToUndoStack('add', node.json());
   }
 
   // Add node event listeners
@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('add-s1').addEventListener('click', () => addNode('Splitter 1'));
   document.getElementById('add-s2').addEventListener('click', () => addNode('Splitter 2'));
   document.getElementById('add-ont').addEventListener('click', () => addNode('ONT'));
+  document.getElementById('add-home').addEventListener('click', () => addNode('Home'));
+  document.getElementById('add-residential').addEventListener('click', () => addNode('Residential'));
 
   // Add edge functionality
   document.getElementById('add-edge').addEventListener('click', () => {
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
           group: 'edges',
           data: { id: id, source: sourceNode.id(), target: node.id() }
         });
-        pushToUndoStack('add', edge);
+        pushToUndoStack('add', edge.json());
 
         addingEdge = false;
         sourceNode = null;
@@ -156,18 +158,30 @@ document.addEventListener('DOMContentLoaded', function () {
         selector: 'node',
         onClickFunction: function (event) {
           const node = event.target || event.cyTarget;
+          const label = node.data('label').toLowerCase().replace(' ', '-');
+          const imageUrl = `images/${label}.jpg`;
           const elementImageDiv = document.getElementById('element-image');
           const elementImageSrc = document.getElementById('element-image-src');
-          const label = node.data('label').toLowerCase().replace(' ', '-');
-          elementImageSrc.src = `images/${label}.jpg`; // Update this to the actual image path
-          elementImageDiv.style.left = `${event.originalEvent.pageX}px`;
-          elementImageDiv.style.top = `${event.originalEvent.pageY}px`;
+          elementImageSrc.src = imageUrl;
           elementImageDiv.style.display = 'block';
+          elementImageDiv.style.top = event.originalEvent.pageY + 'px';
+          elementImageDiv.style.left = event.originalEvent.pageX + 'px';
+        }
+      },
+      {
+        id: 'hide-image',
+        content: 'Hide Image',
+        tooltipText: 'Hide Image',
+        selector: 'node',
+        onClickFunction: function (event) {
+          const elementImageDiv = document.getElementById('element-image');
+          elementImageDiv.style.display = 'none';
         }
       }
     ]
   });
 
+  // Hide image popup on click outside
   document.addEventListener('click', function (event) {
     const elementImageDiv = document.getElementById('element-image');
     if (!elementImageDiv.contains(event.target)) {
