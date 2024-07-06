@@ -10,37 +10,6 @@ body {
     background-color: #f0f0f0;
 }
 
-#sidebar {
-    width: 200px;
-    background-color: #ddd;
-    padding: 10px;
-}
-
-#sidebar h2 {
-    margin-top: 0;
-}
-
-#topology-list {
-    list-style: none;
-    padding: 0;
-}
-
-#topology-list .load-topology {
-    display: block;
-    width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#topology-list .load-topology:hover {
-    background-color: #0056b3;
-}
-
 #controls {
     margin: 10px;
     display: flex;
