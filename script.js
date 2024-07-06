@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selector: 'node',
         style: {
           'background-color': '#666',
-          'label': 'data(id)'
+          'label': 'data(label)' // Change 'id' to 'label'
         }
       },
       {
@@ -32,19 +32,27 @@ document.addEventListener('DOMContentLoaded', function () {
   let addingEdge = false;
   let sourceNode = null;
 
-  // Add node functionality
-  document.getElementById('add-node').addEventListener('click', () => {
+  // Function to add node with a specific label
+  function addNode(label) {
     const id = `node${cy.nodes().length + 1}`;
-    console.log(`Adding node with id: ${id}`);
+    console.log(`Adding node with id: ${id} and label: ${label}`);
     cy.add({
       group: 'nodes',
-      data: { id: id },
+      data: { id: id, label: label },
       position: {
         x: Math.random() * cy.width(),
         y: Math.random() * cy.height()
       }
     });
-  });
+  }
+
+  // Add node event listeners
+  document.getElementById('add-ag3').addEventListener('click', () => addNode('AG3'));
+  document.getElementById('add-ag2').addEventListener('click', () => addNode('AG2'));
+  document.getElementById('add-olt').addEventListener('click', () => addNode('OLT'));
+  document.getElementById('add-s1').addEventListener('click', () => addNode('Splitter 1'));
+  document.getElementById('add-s2').addEventListener('click', () => addNode('Splitter 2'));
+  document.getElementById('add-ont').addEventListener('click', () => addNode('ONT'));
 
   // Add edge functionality
   document.getElementById('add-edge').addEventListener('click', () => {
