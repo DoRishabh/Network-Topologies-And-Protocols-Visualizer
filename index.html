@@ -3,33 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Visualizer</title>
+    <title>Network Builder</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/jsplumb.min.js"></script>
 </head>
 <body>
-    <div id="sidePanel">
-        <a href="#home">Home</a>
-        <a href="#project">Project</a>
-        <!-- Add more links as needed -->
+    <div class="sidebar">
+        <h2>Components</h2>
+        <div id="components">
+            <div class="component" draggable="true" id="Ag3">Ag3</div>
+            <div class="component" draggable="true" id="Ag2">Ag2</div>
+            <div class="component" draggable="true" id="OLT">OLT</div>
+            <div class="component" draggable="true" id="Splitter1">Splitter 1</div>
+            <div class="component" draggable="true" id="Splitter2">Splitter 2</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Project</a></li>
+                <!-- Add more navigation items as needed -->
+            </ul>
+        </nav>
     </div>
-    <div id="mainContent">
-        <div class="network">
-            <div class="component" id="ag3-1">AG3</div>
-            <div class="component" id="ag2-1">AG2</div>
-            <div class="component" id="olt-1">OLT</div>
-            <div class="component" id="splitter1-1">Splitter 1</div>
-            <div class="component" id="splitter2-1">Splitter 2</div>
-        </div>
-        <div class="network">
-            <div class="component" id="ag3-2">AG3</div>
-            <div class="component" id="ag2-2">AG2</div>
-            <div class="component" id="olt-2">OLT</div>
-            <div class="component" id="splitter1-2">Splitter 1</div>
-            <div class="component" id="splitter2-2">Splitter 2</div>
-        </div>
-        <!-- Add more networks as needed -->
-        <div id="status">Status: Disconnected</div>
+    <div class="canvas" id="canvas">
+        <!-- Network components will be dropped here -->
     </div>
     <script src="scripts.js"></script>
 </body>
