@@ -96,11 +96,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Handle triple-click for mobile interface
-    cy.on('click', 'node', function () {
+    cy.on('click', 'node', function (event) {
         clickCount++;
+        const node = event.target;
         setTimeout(() => {
             if (clickCount === 3) {
-                const label = selectedNode.data('label').toLowerCase().replace(' ', '-');
+                const label = node.data('label').toLowerCase().replace(' ', '-');
                 const imageUrl = `images/${label}.jpg`;
                 showImage(imageUrl);
             }
@@ -124,36 +125,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Add a context menu for right-click actions
-    cy.on('cxttap', 'node, edge', function (event) {
-        const target = event.target;
-        const contextMenu = document.getElementById('context-menu');
-        contextMenu.style.top = `${event.originalEvent.clientY}px`;
-        contextMenu.style.left = `${event.originalEvent.clientX}px`;
-        contextMenu.style.display = 'block';
-
-        const deleteBtn = document.getElementById('delete-btn');
-        const showImgBtn = document.getElementById('show-img-btn');
-
-        deleteBtn.onclick = function () {
-            console.log(`Deleting ${target.isNode() ? 'node' : 'edge'} with id: ${target.id()}`);
-            pushToUndoStack('remove', target.json());
-            target.remove();
-            contextMenu.style.display = 'none';
-        };
-
-        showImgBtn.onclick = function () {
-            const label = target.data('label').toLowerCase().replace(' ', '-');
-            const imageUrl = `images/${label}.jpg`;
-            showImage(imageUrl);
-            contextMenu.style.display = 'none';
-        };
-    });
-
-    document.addEventListener('click', function (event) {
-        const contextMenu = document.getElementById('context-menu');
-        if (!contextMenu.contains(event.target)) {
-            contextMenu.style.display = 'none';
-        }
+    cy.on('cxttap', 'node', function (event) {
+        const node = event.target;
+        const label = node.data('label').toLowerCase().replace(' ', '-');
+        const imageUrl = `images/${label}.jpg`;
+        showImage(imageUrl);
     });
 
     // Undo/Redo functionality with multiple steps
