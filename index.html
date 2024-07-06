@@ -1,32 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Builder</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Builder</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Components</h2>
-        <div id="components">
-            <div class="component" draggable="true" id="Ag3">Ag3</div>
-            <div class="component" draggable="true" id="Ag2">Ag2</div>
-            <div class="component" draggable="true" id="OLT">OLT</div>
-            <div class="component" draggable="true" id="Splitter1">Splitter 1</div>
-            <div class="component" draggable="true" id="Splitter2">Splitter 2</div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Project</a></li>
-                <!-- Add more navigation items as needed -->
-            </ul>
-        </nav>
-    </div>
-    <div class="canvas" id="canvas">
-        <!-- Network components will be dropped here -->
-    </div>
-    <script src="scripts.js"></script>
+  <h1>Network Builder</h1>
+  <div id="cy"></div>
+  <script src="script.js"></script>
 </body>
 </html>
