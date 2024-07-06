@@ -1,0 +1,20 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#controls {
+    margin: 10px;
+}
+
+#cy {
+    width: 90%;
+    height: 80%;
+    border: 1px solid #ccc;
+}
