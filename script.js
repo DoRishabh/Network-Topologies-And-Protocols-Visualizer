@@ -32,8 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let sourceNode = null;
     let touchStartTime = 0;
     let clickCount = 0;
-    const LONG_PRESS_DURATION = 5000; // 5000 milliseconds (5 seconds)
-    const TRIPLE_CLICK_INTERVAL = 600; // 600 milliseconds for triple-click
+    const LONG_PRESS_DURATION = 2000; // 2000 milliseconds (2 seconds)
 
     function addNode(label) {
         const id = `node${cy.nodes().length + 1}`;
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (touchEndTime - touchStartTime >= LONG_PRESS_DURATION) {
             const label = selectedNode.data('label').toLowerCase().replace(' ', '-');
             const imageUrl = `images/${label}.jpg`;
-            showImage(imageUrl);
+            showImage(imageUrl, selectedNode.renderedPosition());
         }
         touchStartTime = 0;
     });
@@ -103,17 +102,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (clickCount === 3) {
                 const label = node.data('label').toLowerCase().replace(' ', '-');
                 const imageUrl = `images/${label}.jpg`;
-                showImage(imageUrl);
+                showImage(imageUrl, node.renderedPosition());
             }
             clickCount = 0;
         }, TRIPLE_CLICK_INTERVAL);
     });
 
-    function showImage(imageUrl) {
+    function showImage(imageUrl, nodePosition) {
         const elementImageDiv = document.getElementById('element-image');
         const elementImageSrc = document.getElementById('element-image-src');
         elementImageSrc.src = imageUrl;
         elementImageDiv.style.display = 'block';
+        
+        // Position the image div next to the node
+        const cyContainer = document.getElementById('cy');
+        const cyRect = cyContainer.getBoundingClientRect();
+        elementImageDiv.style.top = `${cyRect.top + nodePosition.y}px`;
+        elementImageDiv.style.left = `${cyRect.left + nodePosition.x + 100}px`; // Adjusting for node width
     }
 
     // Hide image function
@@ -129,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const node = event.target;
         const label = node.data('label').toLowerCase().replace(' ', '-');
         const imageUrl = `images/${label}.jpg`;
-        showImage(imageUrl);
+        showImage(imageUrl, node.renderedPosition());
     });
 
     // Undo/Redo functionality with multiple steps
