@@ -116,14 +116,15 @@ document.addEventListener('DOMContentLoaded', function () {
     target.remove();
   });
 
-  // Undo/Redo functionality
+  // Undo/Redo functionality with multiple steps
   const undoStack = [];
   const redoStack = [];
 
   function pushToUndoStack(action, element) {
     undoStack.push({ action, element });
-    redoStack.length = 0; // Clear redo stack on new action
     console.log(`Action added to undo stack: ${action}`);
+    // Clear redo stack when a new action is pushed to undo stack
+    redoStack.length = 0;
   }
 
   function undo() {
@@ -155,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('undo').addEventListener('click', undo);
   document.getElementById('redo').addEventListener('click', redo);
 
+  // Event listeners for adding to undo stack
   cy.on('add', 'node', function (event) {
     pushToUndoStack('add', event.target.json());
   });
