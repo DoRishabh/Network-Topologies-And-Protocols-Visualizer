@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function addNode(label) {
     const id = `node${cy.nodes().length + 1}`;
     console.log(`Adding node with id: ${id} and label: ${label}`);
-    cy.add({
+    const node = cy.add({
       group: 'nodes',
       data: { id: id, label: label },
       position: {
@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         y: Math.random() * cy.height()
       }
     });
+    pushToUndoStack('add', node);
   }
 
   // Add node event listeners
@@ -71,15 +72,16 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         const id = `edge${cy.edges().length + 1}`;
         console.log(`Adding edge with id: ${id}, source: ${sourceNode.id()}, target: ${node.id()}`);
-        cy.add({
+        const edge = cy.add({
           group: 'edges',
           data: { id: id, source: sourceNode.id(), target: node.id() }
         });
+        pushToUndoStack('add', edge);
 
         if (sourceNode.data('label') === 'Splitter 1') {
           for (let i = 0; i < 8; i++) {
             const s2Id = `nodeS2${cy.nodes().length + 1}`;
-            cy.add({
+            const s2Node = cy.add({
               group: 'nodes',
               data: { id: s2Id, label: 'S2 Output' },
               position: {
@@ -87,25 +89,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 y: sourceNode.position('y') + Math.floor(i / 2) * 50
               }
             });
-            cy.add({
+            const s2Edge = cy.add({
               group: 'edges',
-              data: { id: `edgeS2${cy.edges().length + 1}`, source: sourceNode.id(), target: s2Id }
+              data: { id: `edgeS2${cy.edges().length + 1}`, source: sourceNode.id(), target: s2Node.id() }
             });
+            pushToUndoStack('add', s2Node);
+            pushToUndoStack('add', s2Edge);
 
             for (let j = 0; j < 8; j++) {
               const finalId = `nodeFinal${cy.nodes().length + 1}`;
-              cy.add({
+              const finalNode = cy.add({
                 group: 'nodes',
                 data: { id: finalId, label: 'Final Output' },
                 position: {
-                  x: s2Id.position('x') + (j % 2) * 25,
-                  y: s2Id.position('y') + Math.floor(j / 2) * 25
+                  x: s2Node.position('x') + (j % 2) * 25,
+                  y: s2Node.position('y') + Math.floor(j / 2) * 25
                 }
               });
-              cy.add({
+              const finalEdge = cy.add({
                 group: 'edges',
-                data: { id: `edgeFinal${cy.edges().length + 1}`, source: s2Id, target: finalId }
+                data: { id: `edgeFinal${cy.edges().length + 1}`, source: s2Node.id(), target: finalNode.id() }
               });
+              pushToUndoStack('add', finalNode);
+              pushToUndoStack('add', finalEdge);
             }
           }
         }
@@ -138,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const { action, element } = undoStack.pop();
       redoStack.push({ action, element });
       if (action === 'add') {
-        cy.remove(element);
+        cy.remove(cy.getElementById(element.data.id));
       } else if (action === 'remove') {
         cy.add(element);
       }
@@ -153,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (action === 'add') {
         cy.add(element);
       } else if (action === 'remove') {
-        cy.remove(element);
+        cy.remove(cy.getElementById(element.data.id));
       }
       console.log(`Redo action: ${action}`);
     }
