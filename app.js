@@ -1,83 +1,61 @@
-let scene, camera, renderer, raycaster, mouse;
-let objects = [];
+// scripts.js
 
-init();
-animate();
+document.addEventListener('DOMContentLoaded', () => {
+    const instance = jsPlumb.getInstance({
+        Connector: "Straight",
+        Endpoint: "Dot",
+        PaintStyle: { stroke: "blue", strokeWidth: 2 },
+        EndpointStyle: { fill: "blue", radius: 3 },
+    });
 
-function init() {
-    // Scene setup
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('container').appendChild(renderer.domElement);
-
-    // Light
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5).normalize();
-    scene.add(light);
-
-    // Create network components
-    const geometry = new THREE.BoxGeometry();
-    const material1 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const material2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-
-    const ag1 = new THREE.Mesh(geometry, material1);
-    ag1.position.x = -2;
-    ag1.name = "AG 1";
-    ag1.details = {
-        image: 'path/to/ag1-image.jpg',
-        protocols: 'AG 1 Protocols: ...'
+    const components = document.querySelectorAll('.component');
+    const validConnections = {
+        'ag3': ['ag2', 'olt', 'splitter1', 'splitter2'],
+        'ag2': ['ag3', 'olt', 'splitter1', 'splitter2'],
+        'olt': ['ag3', 'ag2', 'splitter1', 'splitter2'],
+        'splitter1': ['ag3', 'ag2', 'olt', 'splitter2'],
+        'splitter2': ['ag3', 'ag2', 'olt', 'splitter1']
     };
-    scene.add(ag1);
-    objects.push(ag1);
 
-    const microwave = new THREE.Mesh(geometry, material2);
-    microwave.position.x = 2;
-    microwave.name = "Microwave";
-    microwave.details = {
-        image: 'path/to/microwave-image.jpg',
-        protocols: 'Microwave Protocols: ...'
-    };
-    scene.add(microwave);
-    objects.push(microwave);
+    components.forEach(component => {
+        instance.draggable(component, {
+            containment: true
+        });
+        instance.makeSource(component, {
+            filter: ".component",
+            anchor: "Continuous",
+            connectorStyle: { stroke: "#5c96bc", strokeWidth: 2, outlineStroke: "transparent", outlineWidth: 4 },
+            connectionType:"basic",
+            extract:{
+                "action":"the-action"
+            },
+            maxConnections: 5,
+            onMaxConnections: function (info, e) {
+                alert("Maximum connections (" + info.maxConnections + ") reached");
+            }
+        });
+        instance.makeTarget(component, {
+            dropOptions: { hoverClass: "dragHover" },
+            anchor: "Continuous",
+            allowLoopback: true
+        });
+    });
 
-    // Raycaster
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
+    instance.bind("beforeDrop", function(info) {
+        const sourceId = info.sourceId;
+        const targetId = info.targetId;
+        return validConnections[sourceId].includes(targetId);
+    });
 
-    window.addEventListener('click', onMouseClick, false);
-    window.addEventListener('resize', onWindowResize, false);
+    instance.bind("connection", function(info) {
+        updateStatus();
+    });
 
-    camera.position.z = 5;
-}
-
-function onMouseClick(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(objects);
-
-    if (intersects.length > 0) {
-        const object = intersects[0].object;
-        showDetails(object);
+    function updateStatus() {
+        const connections = instance.getConnections();
+        const status = document.getElementById('status');
+        const allConnected = connections.length >= (components.length - 1); // assuming at least one less connection than components
+        status.textContent = `Status: ${allConnected ? 'Connected' : 'Disconnected'}`;
+        status.style.color = allConnected ? 'green' : 'red';
     }
-}
-
-function showDetails(object) {
-    const info = document.getElementById('info');
-    info.innerHTML = `<h3>${object.name}</h3><img src="${object.details.image}" alt="${object.name}"><p>${object.details.protocols}</p>`;
-}
-
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-}
-
+});
