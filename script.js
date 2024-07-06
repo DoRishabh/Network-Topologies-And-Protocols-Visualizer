@@ -93,32 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
     touchStartTime = 0;
   });
 
-  // Double click event for showing context menu (similar to PC right-click)
-  cy.on('dblclick', 'node', function (event) {
-    const node = event.target;
-    showContextMenu(node);
-  });
-
-  function showContextMenu(node) {
-    const contextMenu = document.getElementById('context-menu');
-    contextMenu.style.display = 'block';
-    contextMenu.style.top = `${event.clientY}px`;
-    contextMenu.style.left = `${event.clientX}px`;
-
-    // Optionally, add actions like showing image based on node data
-    const label = node.data('label').toLowerCase().replace(' ', '-');
-    const imageUrl = `images/${label}.jpg`;
-    showImage(imageUrl);
-
-    // Hide context menu when clicking outside
-    document.addEventListener('click', function hideContextMenu(event) {
-      if (!contextMenu.contains(event.target)) {
-        contextMenu.style.display = 'none';
-        document.removeEventListener('click', hideContextMenu);
-      }
-    });
-  }
-
   function showImage(imageUrl) {
     const elementImageDiv = document.getElementById('element-image');
     const elementImageSrc = document.getElementById('element-image-src');
