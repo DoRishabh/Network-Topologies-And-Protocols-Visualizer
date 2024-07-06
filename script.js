@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let clickCount = 0;
     const LONG_PRESS_DURATION = 2000; // 2000 milliseconds (2 seconds)
 
+    // Function to add a new node to the graph
     function addNode(label) {
         const id = `node${cy.nodes().length + 1}`;
         console.log(`Adding node with id: ${id} and label: ${label}`);
@@ -48,12 +49,14 @@ document.addEventListener('DOMContentLoaded', function () {
         pushToUndoStack('add', node.json());
     }
 
+    // Event listener for adding nodes via buttons
     document.querySelectorAll('.add-node').forEach(button => {
         button.addEventListener('click', () => {
             addNode(button.getAttribute('data-label'));
         });
     });
 
+    // Event handler for tapping on nodes
     cy.on('tap', 'node', function (event) {
         const node = event.target;
         if (selectedNode == null) {
@@ -77,13 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Long press event for mobile devices
+    // Event handler for long press (touchstart) on nodes
     cy.on('touchstart', 'node', function (event) {
         touchStartTime = new Date().getTime();
         selectedNode = event.target;
         console.log(`Touch start on node: ${selectedNode.id()}`);
     });
 
+    // Event handler for touch end (long press detection)
     cy.on('touchend', 'node', function () {
         const touchEndTime = new Date().getTime();
         if (touchEndTime - touchStartTime >= LONG_PRESS_DURATION) {
@@ -94,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         touchStartTime = 0;
     });
 
-    // Handle triple-click for mobile interface
+    // Event handler for triple-click (simulated via click count)
     cy.on('click', 'node', function (event) {
         clickCount++;
         const node = event.target;
@@ -105,12 +109,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 showImage(imageUrl, node.renderedPosition());
             }
             clickCount = 0;
-        }, TRIPLE_CLICK_INTERVAL);
+        }, 300); // Assuming TRIPLE_CLICK_INTERVAL is defined elsewhere or directly using 300ms
     });
 
+    // Function to show an image next to a node
     function showImage(imageUrl, nodePosition) {
         const elementImageDiv = document.getElementById('element-image');
         const elementImageSrc = document.getElementById('element-image-src');
+        const showDetailsLink = document.getElementById('show-details-link');
+
+        // Set image source and display image div
         elementImageSrc.src = imageUrl;
         elementImageDiv.style.display = 'block';
         
@@ -119,9 +127,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const cyRect = cyContainer.getBoundingClientRect();
         elementImageDiv.style.top = `${cyRect.top + nodePosition.y}px`;
         elementImageDiv.style.left = `${cyRect.left + nodePosition.x + 100}px`; // Adjusting for node width
+
+        // Set show details link URL
+        showDetailsLink.href = `details.html?node=${selectedNode.id()}`;
     }
 
-    // Hide image function
+    // Event listener to hide image on outside click
     document.addEventListener('click', function (event) {
         const elementImageDiv = document.getElementById('element-image');
         if (!elementImageDiv.contains(event.target)) {
@@ -129,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Add a context menu for right-click actions
+    // Event handler for context menu (right-click)
     cy.on('cxttap', 'node', function (event) {
         const node = event.target;
         const label = node.data('label').toLowerCase().replace(' ', '-');
@@ -141,12 +152,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const undoStack = [];
     const redoStack = [];
 
+    // Function to push actions to undo stack
     function pushToUndoStack(action, element) {
         undoStack.push({ action, element });
         console.log(`Action added to undo stack: ${action}`);
         redoStack.length = 0; // Clear redo stack when a new action is pushed to undo stack
     }
 
+    // Function to undo the last action
     function undo() {
         if (undoStack.length > 0) {
             const { action, element } = undoStack.pop();
@@ -160,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Function to redo the last undone action
     function redo() {
         if (redoStack.length > 0) {
             const { action, element } = redoStack.pop();
@@ -173,9 +187,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Event listeners for undo and redo buttons
     document.getElementById('undo').addEventListener('click', undo);
     document.getElementById('redo').addEventListener('click', redo);
 
+    // Event handlers to add elements to undo stack when added or removed from cytoscape
     cy.on('add', 'node', function (event) {
         pushToUndoStack('add', event.target.json());
     });
@@ -200,13 +216,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Event listener to clear the entire topology
     document.getElementById('clear-topology').addEventListener('click', function () {
         cy.elements().remove();
         console.log('Topology cleared');
     });
 
+    // Function to load specific topologies based on name
     function loadTopology(topologyName) {
-        // Implement logic to load specific topologies
         switch (topologyName) {
             case 'Topology 1':
                 addNode('AG3');
