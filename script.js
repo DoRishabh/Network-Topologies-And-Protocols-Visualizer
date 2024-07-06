@@ -108,6 +108,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Delete node or edge
+  cy.on('cxttap', 'node, edge', function (event) {
+    const target = event.target;
+    console.log(`Deleting ${target.isNode() ? 'node' : 'edge'} with id: ${target.id()}`);
+    pushToUndoStack('remove', target.json());
+    target.remove();
+  });
+
   // Undo/Redo functionality
   const undoStack = [];
   const redoStack = [];
