@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log("Document loaded, initializing Cytoscape...");
 
   const cy = cytoscape({
-    container: document.getElementById('cy'), // container to render in
+    container: document.getElementById('cy'),
     elements: [],
     style: [
       {
@@ -77,44 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
           data: { id: id, source: sourceNode.id(), target: node.id() }
         });
         pushToUndoStack('add', edge);
-
-        if (sourceNode.data('label') === 'Splitter 1') {
-          for (let i = 0; i < 8; i++) {
-            const s2Id = `nodeS2${cy.nodes().length + 1}`;
-            const s2Node = cy.add({
-              group: 'nodes',
-              data: { id: s2Id, label: 'S2 Output' },
-              position: {
-                x: sourceNode.position('x') + (i % 2) * 50,
-                y: sourceNode.position('y') + Math.floor(i / 2) * 50
-              }
-            });
-            const s2Edge = cy.add({
-              group: 'edges',
-              data: { id: `edgeS2${cy.edges().length + 1}`, source: sourceNode.id(), target: s2Node.id() }
-            });
-            pushToUndoStack('add', s2Node);
-            pushToUndoStack('add', s2Edge);
-
-            for (let j = 0; j < 8; j++) {
-              const finalId = `nodeFinal${cy.nodes().length + 1}`;
-              const finalNode = cy.add({
-                group: 'nodes',
-                data: { id: finalId, label: 'Final Output' },
-                position: {
-                  x: s2Node.position('x') + (j % 2) * 25,
-                  y: s2Node.position('y') + Math.floor(j / 2) * 25
-                }
-              });
-              const finalEdge = cy.add({
-                group: 'edges',
-                data: { id: `edgeFinal${cy.edges().length + 1}`, source: s2Node.id(), target: finalNode.id() }
-              });
-              pushToUndoStack('add', finalNode);
-              pushToUndoStack('add', finalEdge);
-            }
-          }
-        }
 
         addingEdge = false;
         sourceNode = null;
