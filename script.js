@@ -58,34 +58,64 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Click on a node to start adding an edge.');
   });
 
-  cy.on('tap', 'node', function (event) {
-    const node = event.target;
-    if (addingEdge) {
-      if (!sourceNode) {
-        sourceNode = node;
-        console.log(`Source node selected: ${sourceNode.id()}. Now click on the target node.`);
-      } else {
-        const id = `edge${cy.edges().length + 1}`;
-        console.log(`Adding edge with id: ${id}, source: ${sourceNode.id()}, target: ${node.id()}`);
-        const edge = cy.add({
-          group: 'edges',
-          data: { id: id, source: sourceNode.id(), target: node.id() }
-        });
-        pushToUndoStack('add', edge.json());
-
-        addingEdge = false;
-        sourceNode = null;
+  // Right-click context menu for PC
+  cy.contextMenus({
+    menuItems: [
+      {
+        id: 'show-image',
+        content: 'Show Image',
+        tooltipText: 'Show Image',
+        selector: 'node',
+        onClickFunction: function (event) {
+          const node = event.target || event.cyTarget;
+          const label = node.data('label').toLowerCase().replace(' ', '-');
+          const imageUrl = `images/${label}.jpg`;
+          showImage(imageUrl, event.originalEvent.pageX, event.originalEvent.pageY);
+        }
+      },
+      {
+        id: 'hide-image',
+        content: 'Hide Image',
+        tooltipText: 'Hide Image',
+        selector: 'node',
+        onClickFunction: function () {
+          hideImage();
+        }
       }
-    } else {
-      if (selectedNode) {
-        selectedNode.unselect();
-      }
-      selectedNode = node;
-      node.select();
-      console.log(`Node selected: ${node.id()}`);
-    }
+    ]
   });
 
+  // Long press event for mobile devices
+  let touchTimer;
+  cy.on('touchstart', 'node', function (event) {
+    touchTimer = setTimeout(() => {
+      const node = event.target || event.cyTarget;
+      const label = node.data('label').toLowerCase().replace(' ', '-');
+      const imageUrl = `images/${label}.jpg`;
+      showImage(imageUrl, event.originalEvent.touches[0].pageX, event.originalEvent.touches[0].pageY);
+    }, 5000); // 5000 milliseconds (5 seconds)
+  });
+
+  cy.on('touchend', 'node', function () {
+    clearTimeout(touchTimer);
+    hideImage();
+  });
+
+  function showImage(imageUrl, x, y) {
+    const elementImageDiv = document.getElementById('element-image');
+    const elementImageSrc = document.getElementById('element-image-src');
+    elementImageSrc.src = imageUrl;
+    elementImageDiv.style.display = 'block';
+    elementImageDiv.style.top = y + 'px';
+    elementImageDiv.style.left = x + 'px';
+  }
+
+  function hideImage() {
+    const elementImageDiv = document.getElementById('element-image');
+    elementImageDiv.style.display = 'none';
+  }
+
+  // Undo/Redo functionality
   const undoStack = [];
   const redoStack = [];
 
@@ -140,42 +170,4 @@ document.addEventListener('DOMContentLoaded', function () {
     pushToUndoStack('remove', event.target.json());
   });
 
-  cy.contextMenus({
-    menuItems: [
-      {
-        id: 'show-image',
-        content: 'Show Image',
-        tooltipText: 'Show Image',
-        selector: 'node',
-        onClickFunction: function (event) {
-          const node = event.target || event.cyTarget;
-          const label = node.data('label').toLowerCase().replace(' ', '-');
-          const imageUrl = `images/${label}.jpg`;
-          const elementImageDiv = document.getElementById('element-image');
-          const elementImageSrc = document.getElementById('element-image-src');
-          elementImageSrc.src = imageUrl;
-          elementImageDiv.style.display = 'block';
-          elementImageDiv.style.top = event.originalEvent.pageY + 'px';
-          elementImageDiv.style.left = event.originalEvent.pageX + 'px';
-        }
-      },
-      {
-        id: 'hide-image',
-        content: 'Hide Image',
-        tooltipText: 'Hide Image',
-        selector: 'node',
-        onClickFunction: function (event) {
-          const elementImageDiv = document.getElementById('element-image');
-          elementImageDiv.style.display = 'none';
-        }
-      }
-    ]
-  });
-
-  document.addEventListener('click', function (event) {
-    const elementImageDiv = document.getElementById('element-image');
-    if (!elementImageDiv.contains(event.target)) {
-      elementImageDiv.style.display = 'none';
-    }
-  });
 });
