@@ -47,12 +47,53 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
         pushToUndoStack('add', node.json());
+        return node;
+    }
+
+    // Function to add an edge between two nodes
+    function addEdge(source, target) {
+        const id = `edge${cy.edges().length + 1}`;
+        console.log(`Adding edge with id: ${id}, source: ${source.id()}, target: ${target.id()}`);
+        const edge = cy.add({
+            group: 'edges',
+            data: { id: id, source: source.id(), target: target.id() }
+        });
+        pushToUndoStack('add', edge.json());
     }
 
     // Event listener for adding nodes via buttons
     document.querySelectorAll('.add-node').forEach(button => {
         button.addEventListener('click', () => {
-            addNode(button.getAttribute('data-label'));
+            const node = addNode(button.getAttribute('data-label'));
+            
+            // Connect nodes in ring structure for Topology 1
+            const nodes = cy.nodes();
+            if (nodes.length >= 2) {
+                if (nodes.length === 2) {
+                    addEdge(nodes[0], nodes[1]);
+                } else if (nodes.length === 3) {
+                    addEdge(nodes[1], nodes[2]);
+                    addEdge(nodes[2], nodes[0]);
+                } else if (nodes.length === 4) {
+                    addEdge(nodes[2], nodes[3]);
+                    addEdge(nodes[3], nodes[0]);
+                } else if (nodes.length === 5) {
+                    addEdge(nodes[3], nodes[4]);
+                    addEdge(nodes[4], nodes[0]);
+                } else if (nodes.length === 6) {
+                    addEdge(nodes[4], nodes[5]);
+                    addEdge(nodes[5], nodes[0]);
+                } else if (nodes.length === 7) {
+                    addEdge(nodes[5], nodes[6]);
+                    addEdge(nodes[6], nodes[0]);
+                } else if (nodes.length === 8) {
+                    addEdge(nodes[6], nodes[7]);
+                    addEdge(nodes[7], nodes[0]);
+                } else if (nodes.length === 9) {
+                    addEdge(nodes[7], nodes[8]);
+                    addEdge(nodes[8], nodes[0]);
+                }
+            }
         });
     });
 
@@ -67,14 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 sourceNode = node;
                 console.log(`Source node selected: ${sourceNode.id()}. Tap on another node to connect.`);
             } else {
-                const id = `edge${cy.edges().length + 1}`;
-                console.log(`Adding edge with id: ${id}, source: ${sourceNode.id()}, target: ${node.id()}`);
-                const edge = cy.add({
-                    group: 'edges',
-                    data: { id: id, source: sourceNode.id(), target: node.id() }
-                });
-                pushToUndoStack('add', edge.json());
-
+                addEdge(sourceNode, node);
                 sourceNode = null;
             }
         }
@@ -226,27 +260,29 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadTopology(topologyName) {
         switch (topologyName) {
             case 'Topology 1':
-                addNode('AG3');
-                addNode('AG2');
-                addNode('OLT');
-                // Connect nodes with edges
-                const nodes1 = cy.nodes();
-                if (nodes1.length >= 2) {
-                    cy.add({ group: 'edges', data: { source: nodes1[0].id(), target: nodes1[1].id() } });
-                }
-                break;
-            case 'Topology 2':
-                addNode('Splitter 1');
-                addNode('Splitter 2');
-                addNode('ONT');
-                // Connect nodes with edges
-                const nodes2 = cy.nodes();
-                if (nodes2.length >= 2) {
-                    cy.add({ group: 'edges', data: { source: nodes2[0].id(), target: nodes2[1].id() } });
-                }
+                const ag3 = addNode('AG3');
+                const ag2 = addNode('AG2');
+                const olt1 = addNode('OLT');
+                const splitter1 = addNode('Splitter 1');
+                const splitter2 = addNode('Splitter 2');
+                const ont = addNode('ONT');
+                const home = addNode('Home');
+                const residential = addNode('Residential');
+
+                // Connect nodes in a ring structure
+                addEdge(ag3, ag2);
+                addEdge(ag2, olt1);
+                addEdge(olt1, splitter1);
+                addEdge(splitter1, splitter2);
+                addEdge(splitter2, ont);
+                addEdge(ont, home);
+                addEdge(home, residential);
+                addEdge(residential, ag3);
+
                 break;
             default:
                 console.log(`Unknown topology: ${topologyName}`);
         }
     }
 });
+
