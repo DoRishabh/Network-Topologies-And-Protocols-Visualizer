@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Network Visualizer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.css">
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.css">
 </head>
 <body>
     <div id="sidebar">
@@ -33,10 +33,13 @@
         <button id="redo">Redo</button>
         <button id="clear-topology">Clear Topology</button>
     </div>
+
     <div id="cy"></div>
+
     <div id="element-image">
         <img id="element-image-src" src="" alt="Element Image">
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
