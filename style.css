@@ -6,12 +6,12 @@
 }
 
 .load-topology {
-    color: #FF5733;  
-    text-decoration: none; 
+    color: #FF5733;
+    text-decoration: none;
 }
 
 .load-topology:hover {
-    color: #C70039; 
+    color: #C70039;
 }
 
 /* Body styling with gradient background */
@@ -127,10 +127,25 @@ button#clear-topology:hover .arrow {
     }
 
     #controls {
-        flex-direction: column;
-        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
         gap: 15px;
+        width: 100%;
         align-items: center;
+    }
+
+    /* Ensure the buttons are 3 to 4 per row on mobile */
+    button {
+        width: calc(33% - 10px);  /* For 3 buttons per row */
+        min-width: 150px;  /* Ensure buttons have a minimum width */
+    }
+
+    /* For smaller devices like phones, ensure a good fit */
+    @media (max-width: 480px) {
+        button {
+            width: calc(50% - 10px);  /* 2 buttons per row on very small screens */
+        }
     }
 }
 
@@ -477,4 +492,3 @@ button:hover {
         padding: 10px 15px;
     }
 }
-
