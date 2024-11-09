@@ -20,32 +20,83 @@ body {
 #sidebar {
     background-color: #2c3e50;
     color: white;
-    padding: 15px;
-    border-radius: 5px;
+    padding: 20px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    width: 200px;
+    width: 250px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateX(-300px);  /* Hidden by default */
+    animation: slideIn 0.7s ease-out forwards;  /* Slower slide-in animation */
 }
 
-#topology-list {
-    list-style: none;
+/* Animation for Sidebar to slide in */
+@keyframes slideIn {
+    from {
+        transform: translateX(-300px);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
-#topology-list li {
-    margin: 10px 0;
-}
-
+/* Cool Button Styles */
 .load-topology {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 16px 32px;  /* Larger padding */
+    border-radius: 8px;
+    font-size: 18px;  /* Larger text size */
+    text-transform: uppercase;  /* Capitalize the text */
+    letter-spacing: 1px;
     cursor: pointer;
+    transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;  /* Full width */
+    max-width: 250px;  /* Adjusted max-width for more spacing */
+    margin: 10px auto;  /* Added spacing between buttons */
+}
+
+/* Hover Effects for Buttons */
+.load-topology:hover {
+    background-color: #2980b9;
+    transform: translateY(-10px) scale(1.05);  /* Lift up with a slight scale effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);  /* More prominent shadow */
+    animation: pulse 0.5s ease-in-out infinite;  /* Pulsing effect on hover */
+}
+
+/* Animation for button hover to pulse */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Hover Effects for Topology Item */
+#topology-list li:hover {
+    background-color: #34495e;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-.load-topology:hover {
-    background-color: #2980b9;
+/* Mobile-Friendly Design */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .load-topology {
+        padding: 12px 24px;
+        font-size: 16px;
+        margin: 5px auto;  /* Reduce margin on smaller screens */
+    }
 }
 
 /* Controls Styling */
