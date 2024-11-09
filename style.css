@@ -1,90 +1,250 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling with gradient background */
 body {
     font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #2b5876, #4e4376);
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #f0f0f0;
+    padding: 20px;
 }
 
+/* Sidebar Styles */
 #sidebar {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
     width: 200px;
-    background-color: #ddd;
-    padding: 10px;
-}
-
-#sidebar h2 {
-    margin-top: 0;
 }
 
 #topology-list {
     list-style: none;
-    padding: 0;
 }
 
-#topology-list .load-topology {
-    display: block;
-    width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-    background-color: #007bff;
+#topology-list li {
+    margin: 10px 0;
+}
+
+.load-topology {
+    background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#topology-list .load-topology:hover {
-    background-color: #0056b3;
-}
-
-#controls {
-    margin: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#cy {
-    width: 90%;
-    height: 80%;
-    border: 1px solid #ccc;
-    background-color: white;
-    margin-top: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-#element-image {
-    position: absolute;
-    display: none;
-    background-color: white;
-    border: 1px solid #ccc;
     padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    max-width: 200px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.load-topology:hover {
+    background-color: #2980b9;
+}
+
+/* Controls Styling */
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-node, #undo, #redo, #clear-topology {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-node:hover, #undo:hover, #redo:hover, #clear-topology:hover {
+    background-color: #219653;
+}
+
+#add-edge {
+    background-color: #e67e22;
+}
+
+#add-edge:hover {
+    background-color: #d35400;
+}
+
+/* Cytoscape container */
+#cy {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Image overlay for node details */
+#element-image {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
 }
 
 #element-image img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 200px;
+    max-height: 200px;
     border-radius: 5px;
+}
+
+/* Scrollable Menu Styles */
+#scrollable-menu {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    overflow-y: auto;
+    width: 180px;
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+#scrollable-menu.hidden {
+    display: none;
+}
+
+#scrollable-menu h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #3498db;
+    text-align: center;
+}
+
+#scrollable-menu ul {
+    list-style: none;
+}
+
+#scrollable-menu ul li {
+    margin: 5px 0;
+}
+
+#scrollable-menu a {
+    text-decoration: none;
+    color: #2980b9;
+    padding: 8px;
+    border-radius: 3px;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#scrollable-menu a:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Menu Icon Styles */
+.menu-icon {
+    position: absolute;
+    top: 20px;
+    left: 220px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #3498db;
+    transition: color 0.3s ease;
+}
+
+.menu-icon:hover {
+    color: #2980b9;
+}
+
+/* Fade-in animation for element image */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#element-image {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Media Query for responsive design */
+@media (max-width: 600px) {
+    #sidebar {
+        width: 100%;
+    }
+
+    #controls {
+        flex-direction: column;
+    }
+
+    .add-node, #undo, #redo, #clear-topology, #add-edge {
+        width: 100%;
+    }
+
+    .menu-icon {
+        left: 20px;
+    }
+}
+
+/* Node animation (pulsing effect) */
+.node {
+    animation: pulse 1.5s infinite;
+    transition: background-color 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        background-color: #0074D9;
+    }
+    50% {
+        background-color: #1f7ed0;
+    }
+}
+
+/* Edge animation with dashed line */
+.edge {
+    stroke-dasharray: 5, 5;
+    animation: dash 1s linear infinite;
+    stroke-width: 2;
+    stroke: #ff9f43;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -10;
+    }
+}
+
+/* Button styles for undo, redo, and clear */
+#undo, #redo, #clear {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #dc3545;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#undo:hover, #redo:hover, #clear:hover {
+    background: #c82333;
 }
