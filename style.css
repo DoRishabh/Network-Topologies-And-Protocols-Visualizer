@@ -5,6 +5,15 @@
     box-sizing: border-box;
 }
 
+.load-topology {
+    color: #FF5733;  
+    text-decoration: none; 
+}
+
+.load-topology:hover {
+    color: #C70039; 
+}
+
 /* Body styling with gradient background */
 body {
     font-family: Arial, sans-serif;
