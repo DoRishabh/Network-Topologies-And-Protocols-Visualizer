@@ -231,6 +231,47 @@ body {
         stroke-dashoffset: -10;
     }
 }
+/* Button Styles */
+button {
+    padding: 12px 24px;              /* Add enough padding for spacing */
+    min-width: 150px;                /* Minimum width to avoid overflow */
+    max-width: 100%;                 /* Button width adjusts based on content */
+    white-space: nowrap;             /* Prevent text from wrapping */
+    overflow: hidden;                /* Hide any overflowing text */
+    text-overflow: ellipsis;         /* Show ellipsis for long text */
+    font-size: 14px;                 /* Adjust font size */
+    display: inline-block;           /* Make button an inline-block */
+    text-align: center;              /* Center the text inside the button */
+    border-radius: 5px;              /* Rounded corners */
+    background-color: #27ae60;       /* Green background */
+    color: white;                    /* White text color */
+    border: none;                    /* Remove border */
+    cursor: pointer;                /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover Effect */
+button:hover {
+    background-color: #219653;       /* Darker green on hover */
+}
+
+/* Specific Button for Add Edge */
+#add-edge {
+    background-color: #e67e22;       /* Different color for Add Edge button */
+}
+
+#add-edge:hover {
+    background-color: #d35400;       /* Darker orange on hover */
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 600px) {
+    button {
+        width: 100%;                  /* Make buttons full-width on smaller screens */
+        font-size: 12px;               /* Adjust font size */
+    }
+}
+
 
 /* Button styles for undo, redo, and clear */
 #undo, #redo, #clear {
