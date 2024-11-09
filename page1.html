@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Visualizer Interface</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .cy-container {
+            width: 100%;
+            height: 500px;
+        }
+        .protocol-btn {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .protocol-btn:hover {
+            background-color: #1d4ed8; /* Hover color */
+            transform: scale(1.05);
+        }
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .cy-container {
+            position: relative;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+        }
+        .cy-container p {
+            color: #bbb;
+            font-size: 1.2rem;
+        }
+        footer {
+            margin-top: 2rem;
+            background-color: #1d4ed8;
+            padding: 1rem;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Protocol Visualizer</h1>
+            <nav>
+                <ul class="flex space-x-6 text-xl">
+                    <li><a href="#" class="hover:underline">Home</a></li>
+                    <li><a href="#" class="hover:underline">Protocols</a></li>
+                    <li><a href="#" class="hover:underline">About</a></li>
+                    <li><a href="#" class="hover:underline">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8">
+        <section class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6">Select a Protocol to Visualize</h2>
+            <div class="btn-container">
+                <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 protocol-btn" data-protocol="BGP">BGP</button>
+                <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 protocol-btn" data-protocol="OSPF">OSPF</button>
+                <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 protocol-btn" data-protocol="MPLS">MPLS</button>
+                <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 protocol-btn" data-protocol="IPsec">IPsec</button>
+                <button class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 protocol-btn" data-protocol="5G NR">5G NR</button>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 rounded-lg shadow-lg mt-8">
+            <h2 class="text-xl font-bold mb-4">Visualization Area</h2>
+            <div id="cy" class="cy-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 Protocol Visualizer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Cytoscape.js
+        var cy = cytoscape({
+            container: document.getElementById('cy'),
+            elements: [], // Elements will be added dynamically based on protocol selection
+            style: [
+                {
+                    selector: 'node',
+                    style: {
+                        'background-color': '#007bff',
+                        'label': 'data(label)',
+                        'color': '#fff',
+                        'text-valign': 'center',
+                        'text-halign': 'center',
+                        'font-size': 14, // Adjust font size dynamically
+                        'width': 'label', // Automatically size node based on label length
+                        'height': 'label', // Automatically size node based on label length
+                        'padding': 10, // Padding inside the node
+                        'border-width': 2,
+                        'border-color': '#0056b3',
+                        'transition': 'all 0.5s ease'
+                    }
+                },
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 2,
+                        'line-color': '#ccc',
+                        'target-arrow-color': '#ccc',
+                        'target-arrow-shape': 'triangle',
+                        'transition': 'all 0.5s ease'
+                    }
+                }
+            ],
+            layout: {
+                name: 'circle',
+                padding: 10
+            }
+        });
+
+        // Protocol visualization function
+        function visualizeProtocol(protocol) {
+            // Clear previous elements
+            cy.elements().remove();
+
+            let elements = [];
+
+            // Visualization for BGP
+            if (protocol === 'BGP') {
+                elements = [
+                    { data: { id: 'R1', label: 'Router 1 (AS 100)' } },
+                    { data: { id: 'R2', label: 'Router 2 (AS 100)' } },
+                    { data: { id: 'R3', label: 'Router 3 (AS 200)' } },
+                    { data: { id: 'R4', label: 'Router 4 (AS 200)' } },
+                    { data: { source: 'R1', target: 'R2' } },
+                    { data: { source: 'R2', target: 'R3' } },
+                    { data: { source: 'R3', target: 'R4' } }
+                ];
+            }
+
+            // Visualization for OSPF
+            if (protocol === 'OSPF') {
+                elements = [
+                    { data: { id: 'X', label: 'Router X' } },
+                    { data: { id: 'Y', label: 'Router Y' } },
+                    { data: { id: 'Z', label: 'Router Z' } },
+                    { data: { source: 'X', target: 'Y' } },
+                    { data: { source: 'Y', target: 'Z' } },
+                    { data: { source: 'X', target: 'Z' } }
+                ];
+            }
+
+            // Visualization for MPLS
+            if (protocol === 'MPLS') {
+                elements = [
+                    { data: { id: 'LER1', label: 'LER 1' } },
+                    { data: { id: 'LER2', label: 'LER 2' } },
+                    { data: { id: 'LER3', label: 'LER 3' } },
+                    { data: { source: 'LER1', target: 'LER2' } },
+                    { data: { source: 'LER2', target: 'LER3' } }
+                ];
+            }
+
+            // Visualization for IPsec
+            if (protocol === 'IPsec') {
+                elements = [
+                    { data: { id: 'Router1', label: 'Router 1' } },
+                    { data: { id: 'Router2', label: 'Router 2' } },
+                    { data: { id: 'Router3', label: 'Router 3' } },
+                    { data: { source: 'Router1', target: 'Router2' } },
+                    { data: { source: 'Router2', target: 'Router3' } }
+                ];
+            }
+
+            // Visualization for 5G NR
+            if (protocol === '5G NR') {
+                elements = [
+                    { data: { id: 'gNodeB1', label: 'gNodeB 1' } },
+                    { data: { id: 'gNodeB2', label: 'gNodeB 2' } },
+                    { data: { id: 'UE1', label: 'UE 1 (User Equipment)' } },
+                    { data: { id: 'UE2', label: 'UE 2 (User Equipment)' } },
+                    { data: { source: 'gNodeB1', target: 'UE1' } },
+                    { data: { source: 'gNodeB2', target: 'UE2' } }
+                ];
+            }
+
+            // Add new elements to the graph
+            cy.add(elements);
+            cy.layout({ name: 'circle', padding: 30 }).run();
+        }
+
+        // Add event listeners for protocol buttons
+        document.querySelectorAll('.protocol-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const protocol = this.getAttribute('data-protocol');
+                visualizeProtocol(protocol);
+            });
+        });
+    </script>
+</body>
+</html>
