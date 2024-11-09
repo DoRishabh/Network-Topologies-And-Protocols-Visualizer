@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/cytoscape-context-menus/cytoscape-context-menus.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div id="sidebar">
@@ -15,7 +16,6 @@
         <ul id="topology-list">
             <li><button class="load-topology" data-topology="Topology 1">Topology 1</button></li>
             <li><button class="load-topology" data-topology="Topology 2">Topology 2</button></li>
-            <!-- Add more topologies as needed -->
         </ul>
     </div>
 
@@ -33,10 +33,30 @@
         <button id="redo">Redo</button>
         <button id="clear-topology">Clear Topology</button>
     </div>
+    
     <div id="cy"></div>
-    <div id="element-image">
+    
+    <div id="element-image" class="hidden">
         <img id="element-image-src" src="" alt="Element Image">
     </div>
+
+    <!-- Beautiful Scrollable Menu -->
+    <div id="scrollable-menu" class="hidden">
+        <h3>Links</h3>
+        <ul>
+            <li><a href="page1.html">Page 1</a></li>
+            <li><a href="page2.html">Page 2</a></li>
+            <li><a href="page3.html">Page 3</a></li>
+            <li><a href="page4.html">Page 4</a></li>
+            <li><a href="page5.html">Page 5</a></li>
+        </ul>
+    </div>
+
+    <!-- Toggle Menu Icon -->
+    <div id="menu-toggle" class="menu-icon">
+        <i class="fas fa-bars"></i>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
