@@ -88,5 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listeners for undo, redo, and clear buttons
     document.getElementById('undo').addEventListener('click', undo);
     document.getElementById('redo').addEventListener('click', redo);
-    document.getElementById('clear').addEventListener('click', clearTopology);
+    // Updated the selector to match the correct button ID
+    document.getElementById('clear-topology').addEventListener('click', clearTopology);
 });
+
