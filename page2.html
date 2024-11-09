@@ -1,0 +1,325 @@
+<html>
+ <head>
+  <title>
+   Reliance Jio Network Protocols
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0a74da;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+        }
+        .protocol {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .protocol:hover {
+            transform: scale(1.05);
+        }
+        .protocol h2 {
+            margin-top: 0;
+        }
+        .protocol img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .protocol p {
+            line-height: 1.6;
+        }
+        .protocol .icon {
+            font-size: 2em;
+            color: #0a74da;
+            margin-right: 10px;
+        }
+  </style>
+ </head>
+ <body>
+  <header>
+   <h1>
+    Reliance Jio Network Protocols
+   </h1>
+  </header>
+  <nav>
+   <a href="#bgp">
+    BGP
+   </a>
+   <a href="#ospf">
+    OSPF
+   </a>
+   <a href="#mpls">
+    MPLS
+   </a>
+   <a href="#igp">
+    IGP
+   </a>
+   <a href="#dns">
+    DNS
+   </a>
+   <a href="#dhcp">
+    DHCP
+   </a>
+   <a href="#snmp">
+    SNMP
+   </a>
+   <a href="#gtp">
+    GTP
+   </a>
+   <a href="#sctp">
+    SCTP
+   </a>
+   <a href="#ipsec">
+    IPsec
+   </a>
+   <a href="#diameter">
+    Diameter
+   </a>
+   <a href="#radius">
+    RADIUS
+   </a>
+   <a href="#sip">
+    SIP
+   </a>
+   <a href="#rsvp">
+    RSVP
+   </a>
+   <a href="#tcpip">
+    TCP/IP
+   </a>
+   <a href="#lte">
+    LTE
+   </a>
+   <a href="#5gnr">
+    5G NR
+   </a>
+     </a>
+   <a href="index.html">
+    Return To Main Page
+   </a>
+  </nav>
+  <div class="container">
+   <div class="protocol" id="bgp">
+    <h2>
+     <i class="fas fa-network-wired icon">
+     </i>
+     BGP (Border Gateway Protocol)
+    </h2>
+    <img alt="Diagram showing BGP routing between different Autonomous Systems" height="400" src="https://storage.googleapis.com/a1aa/image/FwSQ1Zqq9w6VKRsDffAPQSd8qLzv660Jt4RIRpU4Ww1ZETvTA.jpg" width="600"/>
+    <p>
+     BGP is a path-vector routing protocol used for inter-domain (inter-AS) routing. It is the protocol used to exchange routing information between different Autonomous Systems (ASes) on the internet. Jio uses BGP for routing between its network and other service providers or Internet Service Providers (ISPs), ensuring traffic can flow efficiently across the global internet.
+    </p>
+   </div>
+   <div class="protocol" id="ospf">
+    <h2>
+     <i class="fas fa-route icon">
+     </i>
+     OSPF (Open Shortest Path First)
+    </h2>
+    <img alt="Diagram showing OSPF routing within an Autonomous System" height="400" src="https://storage.googleapis.com/a1aa/image/6OzS6uekIfrc6kfzoL5rgyKkl6TFKzIKslIyqh46MKpuImeOB.jpg" width="600"/>
+    <p>
+     OSPF is a link-state routing protocol used to find the shortest path for data to travel within an AS. It is typically used in internal network routing (within the same AS). Jio uses OSPF for efficient routing within its core network, ensuring that data packets are routed along the most efficient and least congested paths within Jio's internal network.
+    </p>
+   </div>
+   <div class="protocol" id="mpls">
+    <h2>
+     <i class="fas fa-exchange-alt icon">
+     </i>
+     MPLS (Multiprotocol Label Switching)
+    </h2>
+    <img alt="Diagram showing MPLS data-carrying mechanism with labeled paths" height="400" src="https://storage.googleapis.com/a1aa/image/meEUpQonn73ddC9qnP9lb7yt01w09vv1C0CiSGzjN8BUip3JA.jpg" width="600"/>
+    <p>
+     MPLS is a data-carrying mechanism that directs data from one network node to the next using short path labels rather than long network addresses. It provides high-speed data transmission and traffic engineering. Jio uses MPLS to optimize the routing of traffic within its backbone network, allowing for prioritization of traffic, maintaining Quality of Service (QoS), and ensuring efficient use of bandwidth.
+    </p>
+   </div>
+   <div class="protocol" id="igp">
+    <h2>
+     <i class="fas fa-sitemap icon">
+     </i>
+     IGP (Interior Gateway Protocols)
+    </h2>
+    <img alt="Diagram showing IGP routing within an internal network" height="400" src="https://storage.googleapis.com/a1aa/image/RPjPOmFgdl7KHNcJysZ0JkfU6ZZYhtYjr55EPwZtNTdbip3JA.jpg" width="600"/>
+    <p>
+     IGPs are protocols used for routing within an Autonomous System. In addition to OSPF, other IGPs like IS-IS (Intermediate System to Intermediate System) may be used for intra-AS routing. Jio uses IGPs like OSPF and IS-IS to handle routing between devices in its internal network, ensuring fast and reliable data transfer.
+    </p>
+   </div>
+   <div class="protocol" id="dns">
+    <h2>
+     <i class="fas fa-globe icon">
+     </i>
+     DNS (Domain Name System)
+    </h2>
+    <img alt="Diagram showing DNS resolution process from domain name to IP address" height="400" src="https://storage.googleapis.com/a1aa/image/LsMYAHFiivLqHN5eHCWEoP19xUoxxT1Lytn7QCJLykAcip3JA.jpg" width="600"/>
+    <p>
+     DNS is used to resolve domain names into IP addresses, facilitating communication over the internet. Jio operates several DNS servers to resolve domain names for its users, ensuring that its customers can access websites, servers, and other resources across the internet.
+    </p>
+   </div>
+   <div class="protocol" id="dhcp">
+    <h2>
+     <i class="fas fa-network-wired icon">
+     </i>
+     DHCP (Dynamic Host Configuration Protocol)
+    </h2>
+    <img alt="Diagram showing DHCP process of assigning IP addresses to devices" height="400" src="https://storage.googleapis.com/a1aa/image/qXFOGaFS0ULsK5Woi0G59hnsGxsGtb11NIQOdqHl7t5Kx07E.jpg" width="600"/>
+    <p>
+     DHCP is used to dynamically assign IP addresses to devices in Jio's network. Jio uses DHCP to simplify the assignment of IP addresses to devices within its network, both for customer devices (like mobile phones) and network equipment.
+    </p>
+   </div>
+   <div class="protocol" id="snmp">
+    <h2>
+     <i class="fas fa-tachometer-alt icon">
+     </i>
+     SNMP (Simple Network Management Protocol)
+    </h2>
+    <img alt="Diagram showing SNMP network management and monitoring process" height="400" src="https://storage.googleapis.com/a1aa/image/hUfmzLuqFZXCeUftBIfGrLunsRVecsChPDUZX9vhVl0kkY6dC.jpg" width="600"/>
+    <p>
+     SNMP is used for network management and monitoring. It helps in collecting performance data, configuration management, and fault management. Jio uses SNMP to monitor and manage its vast network infrastructure, ensuring that it can quickly detect and respond to network issues.
+    </p>
+   </div>
+   <div class="protocol" id="gtp">
+    <h2>
+     <i class="fas fa-mobile-alt icon">
+     </i>
+     GTP (GPRS Tunneling Protocol)
+    </h2>
+    <img alt="Diagram showing GTP tunneling and user data management in mobile networks" height="400" src="https://storage.googleapis.com/a1aa/image/GA8d2uLf7y2KeUCGGPZhnI2JNVBitfJL1he8HcHCzMOITM9OB.jpg" width="600"/>
+    <p>
+     GTP is used in mobile networks for tunneling and managing user data in 3G, 4G, and LTE networks. Jio uses GTP to enable communication between its mobile core network and radio access network (RAN), facilitating user data transfer in GPRS (General Packet Radio Service) and LTE (Long-Term Evolution) environments.
+    </p>
+   </div>
+   <div class="protocol" id="sctp">
+    <h2>
+     <i class="fas fa-signal icon">
+     </i>
+     SCTP (Stream Control Transmission Protocol)
+    </h2>
+    <img alt="Diagram showing SCTP reliable transport of signaling data in mobile networks" height="400" src="https://storage.googleapis.com/a1aa/image/gf4SNkCo79RBKa3DnST0nJhyeZUl7uLGAjPEYfcuz9RqJmeOB.jpg" width="600"/>
+    <p>
+     SCTP is used for reliable transport of signaling data in mobile networks. Jio uses SCTP in signaling between mobile network elements such as MSC (Mobile Switching Centers) and SGSN (Serving GPRS Support Nodes) to ensure robust and reliable transmission.
+    </p>
+   </div>
+   <div class="protocol" id="ipsec">
+    <h2>
+     <i class="fas fa-lock icon">
+     </i>
+     IPsec (Internet Protocol Security)
+    </h2>
+    <img alt="Diagram showing IPsec secure IP communication with encryption and authentication" height="400" src="https://storage.googleapis.com/a1aa/image/eDMLDMs8qIW8Dan3ogebwfMQIJYue44nYJYd2e5o0I7HkY6dC.jpg" width="600"/>
+    <p>
+     IPsec is used to provide secure IP communication by authenticating and encrypting each IP packet in a communication session. Jio uses IPsec to secure data transmission between its different network elements, especially in virtual private network (VPN) scenarios.
+    </p>
+   </div>
+   <div class="protocol" id="diameter">
+    <h2>
+     <i class="fas fa-user-shield icon">
+     </i>
+     Diameter Protocol
+    </h2>
+    <img alt="Diagram showing Diameter protocol for authentication, authorization, and accounting in mobile networks" height="400" src="https://storage.googleapis.com/a1aa/image/KYF7bfTx6yWFPyz09jE0NjGku3WV9OjoeLm9eQ83nW43JmeOB.jpg" width="600"/>
+    <p>
+     Diameter is used in authentication, authorization, and accounting (AAA) for IP-based services, particularly in mobile networks. Jio uses Diameter for managing its customer’s network access, including authentication and billing information in its 4G network.
+    </p>
+   </div>
+   <div class="protocol" id="radius">
+    <h2>
+     <i class="fas fa-user-check icon">
+     </i>
+     RADIUS (Remote Authentication Dial-In User Service)
+    </h2>
+    <img alt="Diagram showing RADIUS protocol for user authentication, authorization, and accounting in VPN and Wi-Fi networks" height="400" src="https://storage.googleapis.com/a1aa/image/lW3xtyXKqMrvHVThFu8WhYmbTdwyOrKQ7YcHA4vPatSHx07E.jpg" width="600"/>
+    <p>
+     RADIUS is another AAA protocol used for user authentication, authorization, and accounting, typically in VPN and Wi-Fi networks. Jio uses RADIUS for authenticating users on its Wi-Fi hotspots or when customers are accessing certain services.
+    </p>
+   </div>
+   <div class="protocol" id="sip">
+    <h2>
+     <i class="fas fa-phone-alt icon">
+     </i>
+     SIP (Session Initiation Protocol)
+    </h2>
+    <img alt="Diagram showing SIP signaling and controlling multimedia communication sessions" height="400" src="https://storage.googleapis.com/a1aa/image/k8nC6LMF6aLRM1e6kSKePkGGHfwDknuzEyE4yFB9XSuYJmeOB.jpg" width="600"/>
+    <p>
+     SIP is used for signaling and controlling multimedia communication sessions, such as voice and video calls. Jio uses SIP for managing voice over IP (VoIP) and video calls over its 4G LTE network, including services like JioVoice.
+    </p>
+   </div>
+   <div class="protocol" id="rsvp">
+    <h2>
+     <i class="fas fa-tasks icon">
+     </i>
+     RSVP (Resource Reservation Protocol)
+    </h2>
+    <img alt="Diagram showing RSVP reserving resources across a network for high-priority traffic" height="400" src="https://storage.googleapis.com/a1aa/image/1KradcPn2kL7I1x7e3MGFsxktQ0tiaoIUWAlewjG6D2uETvTA.jpg" width="600"/>
+    <p>
+     RSVP is used for reserving resources across a network, ensuring that high-priority traffic (like voice or video) gets the necessary bandwidth. Jio uses RSVP for managing QoS (Quality of Service) and reserving bandwidth for high-priority services such as voice and real-time video calls.
+    </p>
+   </div>
+   <div class="protocol" id="tcpip">
+    <h2>
+     <i class="fas fa-laptop-code icon">
+     </i>
+     TCP/IP (Transmission Control Protocol/Internet Protocol)
+    </h2>
+    <img alt="Diagram showing TCP/IP foundational suite of protocols for internet communication" height="400" src="https://storage.googleapis.com/a1aa/image/J6Zle9WPiNRhHa3vFrHlLKWu5Wduy3eRPQnn6T0af2BbJmeOB.jpg" width="600"/>
+    <p>
+     TCP/IP is the foundational suite of protocols that govern communication over the internet. It’s essential for ensuring reliable data transmission and routing. Jio uses TCP/IP as the core protocol stack across its entire network for packet-switched communications.
+    </p>
+   </div>
+   <div class="protocol" id="lte">
+    <h2>
+     <i class="fas fa-broadcast-tower icon">
+     </i>
+     LTE (Long-Term Evolution) Protocols (for 4G/5G)
+    </h2>
+    <img alt="Diagram showing LTE protocols for mobile broadband communication" height="400" src="https://storage.googleapis.com/a1aa/image/X7mOW3wuFlJJOFDBoC5lVeRNn5kzG70ebKed3cfjeMe0Lx07E.jpg" width="600"/>
+    <p>
+     LTE includes several protocols used for mobile broadband communication, such as evolved packet core (EPC), eNodeB, and user equipment (UE) protocols. As a 4G provider, Jio uses LTE protocols to deliver high-speed data, voice, and video services to its users.
+    </p>
+   </div>
+   <div class="protocol" id="5gnr">
+    <h2>
+     <i class="fas fa-satellite-dish icon">
+     </i>
+     5G NR (New Radio) Protocols
+    </h2>
+    <img alt="Diagram showing 5G NR protocols for ultra-fast data and low latency communication" height="400" src="https://storage.googleapis.com/a1aa/image/PGWzTe0B6ywWRi7PrCww2eD59VfCfYghiFjdvmF6SkSDTM9OB.jpg" width="600"/>
+    <p>
+     For its 5G network, Jio uses 5G NR protocols to deliver ultra-fast data, low latency, and massive connectivity. Jio is rolling out 5G in India and uses 5G NR protocols for efficient wireless communication at higher frequencies.
+    </p>
+   </div>
+  </div>
+ </body>
+</html>
