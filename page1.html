@@ -1,0 +1,159 @@
+<html>
+ <head>
+  <title>
+   Network Topologies
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3em;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .topology {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .topology-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .topology-item:hover {
+            transform: scale(1.05);
+        }
+        .topology-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .topology-item h2 {
+            margin: 20px 0;
+            font-size: 1.5em;
+        }
+        .topology-item p {
+            font-size: 1em;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            background-color: #ff7e5f;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #feb47b;
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <h1>
+    Network Topologies
+   </h1>
+   <div class="topology">
+    <div class="topology-item">
+     <img alt="Diagram of a Bus Topology with a single central cable and multiple devices connected to it" height="200" src="https://storage.googleapis.com/a1aa/image/hZXs8gRvbFbwFVhLH3KhJoNdZMRRamHqkBniTXCuI3pNs07E.jpg" width="300"/>
+     <h2>
+      Bus Topology
+     </h2>
+     <p>
+      Bus topology uses a single central cable to which all network devices are connected. It is easy to install and requires less cable length than other topologies.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a Star Topology with a central hub and multiple devices connected to it" height="200" src="https://storage.googleapis.com/a1aa/image/yz0ZRnD6UHrDKV3V9Txpt8KGiPQa4PQ9J89xFKtmJD7Ps07E.jpg" width="300"/>
+     <h2>
+      Star Topology
+     </h2>
+     <p>
+      Star topology features a central hub to which all devices are connected. It is easy to manage and troubleshoot, but if the central hub fails, the entire network goes down.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a Ring Topology with devices connected in a circular fashion" height="200" src="https://storage.googleapis.com/a1aa/image/PctNNIPE17JbORge9aXt7zCwVRPYJ7yKDcmAFNQfI869wSvTA.jpg" width="300"/>
+     <h2>
+      Ring Topology
+     </h2>
+     <p>
+      In ring topology, each device is connected to two other devices, forming a circular network. Data travels in one direction, reducing the chance of packet collisions.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a Mesh Topology with multiple devices interconnected" height="200" src="https://storage.googleapis.com/a1aa/image/Y0kjie4GllWGOSBremf1fSVy0zf5xfqDCkxiNTz5aBPNNs07E.jpg" width="300"/>
+     <h2>
+      Mesh Topology
+     </h2>
+     <p>
+      Mesh topology involves each device being connected to every other device. It provides high redundancy and reliability but is expensive and complex to install.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a Tree Topology with a hierarchical structure of devices" height="200" src="https://storage.googleapis.com/a1aa/image/gYVB7cDEeW1YcCotiOLlN2tuh6JLOU6cNM3NUlw1OifywSvTA.jpg" width="300"/>
+     <h2>
+      Tree Topology
+     </h2>
+     <p>
+      Tree topology combines characteristics of star and bus topologies. It has a hierarchical structure, making it easy to expand and manage.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a Hybrid Topology combining different types of topologies" height="200" src="https://storage.googleapis.com/a1aa/image/434JFBM5EhI0Ch8XuFf9fZ8UV0PS3q8DLqo7HZlBVOI5wSvTA.jpg" width="300"/>
+     <h2>
+      Hybrid Topology
+     </h2>
+     <p>
+      Hybrid topology is a combination of two or more different types of topologies. It leverages the strengths of each topology to create a more efficient network.
+     </p>
+    </div>
+    <div class="topology-item">
+     <img alt="Diagram of a complex FTTx Topology showing nodes, eNodeBs, Aggregates, OLT, and ONT" height="200" src="https://storage.googleapis.com/a1aa/image/DpAEAyEF3tbSEFQqXgUS11WGn7KVBECVcYkKBehwMt6ZYp3JA.jpg" width="300"/>
+     <h2>
+      FTTx Topology
+     </h2>
+     <p>
+      FTTx topology includes various components like nodes, eNodeBs, Aggregates, OLT, and ONT. It is used in telecommunication sectors to provide high-speed internet and other services.
+     </p>
+    </div>
+   </div>
+   <div class="button-container">
+    <a href="main.html">
+     <button class="button">
+      Implement Topology !
+     </button>
+    </a>
+   </div>
+  </div>
+ </body>
+</html>
