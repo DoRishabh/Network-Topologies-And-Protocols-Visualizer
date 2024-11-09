@@ -53,18 +53,20 @@ button {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 10px 20px;  /* Moderate padding */
-    border-radius: 8px;
-    font-size: 16px;  /* Optimal text size */
+    padding: 12px 24px;  /* Added enough padding for spacing */
+    min-width: 150px;    /* Minimum width to avoid overflow */
+    max-width: 100%;     /* Button width adjusts based on content */
+    font-size: 16px;     /* Optimal text size */
     text-transform: uppercase;  /* Capitalize the text */
     letter-spacing: 1px;
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    width: auto;  /* Let button size adjust naturally */
     margin: 8px 0;  /* Vertical spacing */
-    position: relative;  /* For arrow positioning */
+    position: relative;
     overflow: hidden;  /* Hide arrow outside the button initially */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Show ellipsis for long text */
 }
 
 /* Arrow Styling */
@@ -114,15 +116,23 @@ button#clear-topology:hover .arrow {
     #sidebar {
         width: 100%;
         padding: 15px;
+        margin-bottom: 0; /* No margin on mobile */
     }
 
     button {
-        padding: 10px 15px;  /* Slightly reduced padding for smaller screens */
+        padding: 8px 16px;  /* Slightly reduced padding for smaller screens */
         font-size: 14px;
         margin: 5px 0;  /* Reduced margin on smaller screens */
+        width: 100%; /* Full-width buttons on mobile */
+    }
+
+    #controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        align-items: center;
     }
 }
-
 
 /* Controls Styling */
 #controls {
@@ -132,6 +142,7 @@ button#clear-topology:hover .arrow {
     margin-bottom: 20px;
 }
 
+/* Specific Button Styles */
 .add-node, #undo, #redo, #clear-topology {
     background-color: #27ae60;
     color: white;
@@ -307,14 +318,12 @@ button#clear-topology:hover .arrow {
         stroke-dashoffset: -10;
     }
 }
+
 /* Button Styles */
 button {
-    padding: 12px 24px;              /* Add enough padding for spacing */
-    min-width: 150px;                /* Minimum width to avoid overflow */
+    padding: 10px 20px;              /* Adjust padding for smaller screens */
+    min-width: 130px;                /* Reduce min-width for mobile */
     max-width: 100%;                 /* Button width adjusts based on content */
-    white-space: nowrap;             /* Prevent text from wrapping */
-    overflow: hidden;                /* Hide any overflowing text */
-    text-overflow: ellipsis;         /* Show ellipsis for long text */
     font-size: 14px;                 /* Adjust font size */
     display: inline-block;           /* Make button an inline-block */
     text-align: center;              /* Center the text inside the button */
@@ -345,9 +354,9 @@ button:hover {
     button {
         width: 100%;                  /* Make buttons full-width on smaller screens */
         font-size: 12px;               /* Adjust font size */
+        padding: 8px 16px;             /* Adjust padding */
     }
 }
-
 
 /* Button styles for undo, redo, and clear */
 #undo, #redo, #clear {
@@ -365,6 +374,7 @@ button:hover {
 #undo:hover, #redo:hover, #clear:hover {
     background: #c82333;
 }
+
 /* Footer Styling */
 #footer {
     background-color: #2c3e50;
@@ -467,3 +477,4 @@ button:hover {
         padding: 10px 15px;
     }
 }
+
