@@ -40,42 +40,57 @@ body {
 }
 
 /* Cool Button Styles */
-.load-topology {
+button {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 16px 32px;  /* Larger padding */
+    padding: 10px 20px;  /* Moderate padding */
     border-radius: 8px;
-    font-size: 18px;  /* Larger text size */
+    font-size: 16px;  /* Optimal text size */
     text-transform: uppercase;  /* Capitalize the text */
     letter-spacing: 1px;
     cursor: pointer;
-    transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    width: 100%;  /* Full width */
-    max-width: 250px;  /* Adjusted max-width for more spacing */
-    margin: 10px auto;  /* Added spacing between buttons */
+    width: auto;  /* Let button size adjust naturally */
+    margin: 8px 0;  /* Vertical spacing */
+    position: relative;  /* For arrow positioning */
+    overflow: hidden;  /* Hide arrow outside the button initially */
 }
 
-/* Hover Effects for Buttons */
-.load-topology:hover {
+/* Arrow Styling */
+button .arrow {
+    position: absolute;
+    right: -25px;  /* Start position of the arrow outside the button */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-color: #ffffff;
+    clip-path: polygon(100% 50%, 0 100%, 0 0);  /* Create a triangle shape */
+    transition: transform 0.3s ease, right 0.3s ease, top 0.3s ease;
+}
+
+/* Hover Effects for All Buttons */
+button:hover {
     background-color: #2980b9;
-    transform: translateY(-10px) scale(1.05);  /* Lift up with a slight scale effect */
+    transform: translateY(-5px);  /* Subtle lift */
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);  /* More prominent shadow */
-    animation: pulse 0.5s ease-in-out infinite;  /* Pulsing effect on hover */
 }
 
-/* Animation for button hover to pulse */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+/* Arrow Movement on Hover (For all buttons) */
+button:hover .arrow {
+    right: 15px;  /* Move arrow into the button */
+}
+
+/* Specific Button Movement for "Add AG3", "Add AG2", "Add OLT", "Add Splitter", etc. */
+button.add-node:hover .arrow,
+button#add-edge:hover .arrow,
+button#undo:hover .arrow,
+button#redo:hover .arrow,
+button#clear-topology:hover .arrow {
+    right: 30px;  /* Move arrow towards the target button on hover */
+    top: 50%;  /* Center the arrow */
 }
 
 /* Hover Effects for Topology Item */
@@ -92,12 +107,13 @@ body {
         padding: 15px;
     }
 
-    .load-topology {
-        padding: 12px 24px;
-        font-size: 16px;
-        margin: 5px auto;  /* Reduce margin on smaller screens */
+    button {
+        padding: 10px 15px;  /* Slightly reduced padding for smaller screens */
+        font-size: 14px;
+        margin: 5px 0;  /* Reduced margin on smaller screens */
     }
 }
+
 
 /* Controls Styling */
 #controls {
