@@ -135,17 +135,36 @@ button#clear-topology:hover .arrow {
         align-items: center;
     }
 
-    /* Ensure the buttons are 3 to 4 per row on mobile */
-    button {
-        width: calc(33% - 10px);  /* For 3 buttons per row */
-        min-width: 150px;  /* Ensure buttons have a minimum width */
+   /* Media Query for Mobile Layout (max-width 768px) */
+@media (max-width: 768px) {
+    /* Adjust the button container to wrap */
+    #controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;           /* Space between buttons */
+        justify-content: center;  /* Center buttons in the container */
     }
 
-    /* For smaller devices like phones, ensure a good fit */
+    /* Adjust individual button widths to fit 4 buttons per row */
+    button {
+        width: calc(25% - 10px);  /* 4 buttons per row (with space between) */
+        font-size: 14px;
+        padding: 8px 16px;
+        margin: 5px 0;  /* Reduced margin for tighter spacing */
+    }
+
+    /* Adjust button styles for even smaller screens */
     @media (max-width: 480px) {
         button {
-            width: calc(50% - 10px);  /* 2 buttons per row on very small screens */
+            width: calc(25% - 10px);  /* 4 buttons per row on very small screens */
+            font-size: 12px;
+            padding: 6px 12px; /* Slightly reduced padding for small screens */
         }
+    }
+
+    /* Adjust the menu icon position for mobile view */
+    .menu-icon {
+        left: 20px;
     }
 }
 
