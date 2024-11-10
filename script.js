@@ -88,7 +88,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listeners for undo, redo, and clear buttons
     document.getElementById('undo').addEventListener('click', undo);
     document.getElementById('redo').addEventListener('click', redo);
-    // Updated the selector to match the correct button ID
     document.getElementById('clear-topology').addEventListener('click', clearTopology);
-});
 
+    // Add custom node functionality
+    document.getElementById('add-custom-node').addEventListener('click', () => {
+        const nodeName = prompt("Enter a name for the custom node:");
+        if (nodeName && nodeName.trim() !== '') {
+            addNode(nodeName);
+        } else {
+            alert("Node name cannot be empty.");
+        }
+    });
+});
